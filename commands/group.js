@@ -16,11 +16,6 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 cmd({
             pattern: "ادخل",
             desc: "",
@@ -70,8 +65,8 @@ cmd({
                     .seconds > 20) return citel.reply("الحد الاقصى للفيد 20 ثانية");
                 let media = await quoted.download();
                 let sticker = new Sticker(media, {
-                    pack: pack, // The pack name
-                    author: author, // The author name
+                    pack: citel.pushName, // The pack name
+                    author: "bot", // The author name
                     type: StickerTypes.FULL, // The sticker type
                     categories: ["🤩", "🎉"], // The sticker category
                     id: "12345", // The sticker id
