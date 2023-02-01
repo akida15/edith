@@ -7,8 +7,7 @@ Secktor.cmd({
     filename: __filename,
 },
 async(Void, citel) => {
-if (citel.chat.id !== "120363048531546525@g.us") {
-return;
+if (citel.group === '1') {
 
 
     return await citel.reply(`✠═ • ═  •༺⊱╠💠╣⊰༻• ═ • ═✠
