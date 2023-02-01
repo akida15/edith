@@ -20,7 +20,7 @@ cmd({
             filename: __filename,
         },
         async(Void, citel, text) => {
-            return await citel.reply(`${amount_of_questions(type)}`);
+            return await citel.reply(`${random_question()}`);
         }
     )
     //---------------------------------------------------------------------------
