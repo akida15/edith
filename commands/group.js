@@ -20,7 +20,7 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 const people = {};
 
-Secktor.cmd({
+cmd({
         pattern: "I am",
         desc: "Declare your presence",
         category: "General",
@@ -33,7 +33,7 @@ Secktor.cmd({
     }
 );
 
-Secktor.cmd({
+cmd({
         pattern: "pick two",
         desc: "Pick two people from the list",
         category: "General",
@@ -52,7 +52,7 @@ Secktor.cmd({
 //---------------------------------------------------------------------------
 
 
-Secktor.cmd({
+cmd({
     pattern: "guess",
     desc: "Play a number guessing game",
     category: "Fun",
