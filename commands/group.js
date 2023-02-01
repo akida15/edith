@@ -18,34 +18,82 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-const people = {};
-
 cmd({
-        pattern: "nino",
-        desc: "Declare your presence",
-        category: "General",
-        filename: __filename,
-    },
-    async (Void, citel) => {
-        const userId = citel.message.from;
-        people[userId] = true;
-        return await citel.reply(`Okay, noted that you are here.`);
+    pattern: "rps",
+    desc: "Play rock, paper, scissors game",
+    category: "Fun",
+    filename: __filename,
+},
+async (Void, citel) => {
+    await citel.reply("Let's play rock, paper, scissors! Choose either rock, paper, or scissors.");
+
+    let userChoice = await citel.ask("Your choice?");
+    userChoice = userChoice.toLowerCase();
+
+    // Make sure the user entered a valid choice
+    while (userChoice !== "rock" && userChoice !== "paper" && userChoice !== "scissors") {
+        await citel.reply("Invalid choice! Please choose either rock, paper, or scissors.");
+        userChoice = await citel.ask("Your choice?");
+        userChoice = userChoice.toLowerCase();
     }
-);
+
+    // Generate the bot's choice
+    const choices = ["rock", "paper", "scissors"];
+    const botChoice = choices[Math.floor(Math.random() * choices.length)];
+
+    if (userChoice === "rock") {
+        if (botChoice === "rock") {
+            await citel.reply("It's a tie! We both chose rock.");
+        } else if (botChoice === "paper") {
+            await citel.reply("You lose! Paper beats rock.");
+        } else if (botChoice === "scissors") {
+            await citel.reply("You win! Rock beats scissors.");
+        }
+    } else if (userChoice === "paper") {
+        if (botChoice === "rock") {
+            await citel.reply("You win! Paper beats rock.");
+        } else if (botChoice === "paper") {
+            await citel.reply("It's a tie! We both chose paper.");
+        } else if (botChoice === "scissors") {
+            await citel.reply("You lose! Scissors beat paper.");
+        }
+    } else if (userChoice === "scissors") {
+        if (botChoice === "rock") {
+            await citel.reply("You lose! Rock beats scissors.");
+        } else if (botChoice === "paper") {
+            await citel.reply("You win! Scissors beat paper.");
+        } else if (botChoice === "scissors") {
+            await citel.reply("It's a tie! We both chose scissors.");
+        }
+    }
+});
+
 
 cmd({
-        pattern: "pick",
-        desc: "Pick two people from the list",
-        category: "General",
+        pattern: "play",
+        desc: "To play a game of choose",
+        category: "Games",
         filename: __filename,
     },
-    async (Void, citel) => {
-        const userIds = Object.keys(people);
-        if (userIds.length < 2) {
-            return await citel.reply(`Sorry, not enough people have declared their presence.`);
-        }
-        const selected = [userIds[Math.floor(Math.random() * userIds.length)], userIds[Math.floor(Math.random() * userIds.length)]];
-        return await citel.reply(`I have randomly selected two people: ${selected[0]} and ${selected[1]}`);
+    async(Void, citel) => {
+        var players = []
+        await citel.reply("Who wants to play a game? Type 'I want to play' to join!")
+
+        citel.onMessage(async msg => {
+            if (msg.body === "I want to play") {
+                players.push(msg.from)
+                await citel.reply(`${msg.from} joined the game!`)
+            }
+        })
+
+        setTimeout(async () => {
+            if (players.length < 2) {
+                return await citel.reply("Not enough players, game cancelled")
+            }
+
+            var chooser = players[Math.floor(Math.random() * players.length)]
+            await citel.reply(`${chooser} will choose the game to play!`)
+        }, 30000)
     }
 );
 //---------------------------------------------------------------------------
