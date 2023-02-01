@@ -18,57 +18,7 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
-cmd({
-        pattern: "spot1",
-    description: "A game where the bot presents a list of items and the player must choose the odd one out.",
-    execute(message, args) {
-        // List of items to choose from
-        const items = [
-            "apple",
-            "banana",
-            "cherry",
-            "orange",
-            "pear",
-            "grape"
-        ];
-        
-        // Select 3 random items from the list
-        const item1 = getRandomItem(items);
-        const item2 = getRandomItem(items);
-        const item3 = getRandomItem(items);
-        
-        // Find the odd one out by comparing all the items
-        let oddOneOut = item1;
-        if (item1 === item2) {
-            oddOneOut = item3;
-        } else if (item1 === item3) {
-            oddOneOut = item2;
-        } else if (item2 === item3) {
-            oddOneOut = item1;
-        }
-        
-        // Build the question
-        const question = `Which of these is the odd one out?\n\n${item1}\n${item2}\n${item3}`;
-        
-        // Send the question to the user
-        message.channel.send(question).then(() => {
-            // Wait for the user's response
-            message.channel.awaitMessages(response => {
-                // Check if the user's response is correct
-                if (response.content.toLowerCase() === oddOneOut) {
-                    message.reply("You're correct! Well done.");
-                } else {
-                    message.reply(`Sorry, that's incorrect. The correct answer was ${oddOneOut}.`);
-                }
-            }, {
-                // Only accept one message
-                max: 1,
-                // Wait for up to 10 seconds for a response
-                time: 10000
-            });
-        });
-    }
-};
+
 //---------------------------------------------------------------------------
 //---------------------------------------------------------------------------
 cmd({
