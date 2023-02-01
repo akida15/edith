@@ -23,6 +23,25 @@ cmd({
             return await citel.reply(`${kt()}`);
         }
     )
+
+//---------------------------------------------------------------------------
+    cmd({
+        pattern: "zizo",
+        desc: "truth and dare(dare game.).",
+        category: "fun",
+        filename: __filename,
+    }, 
+    async(Void, citel, text) => {
+        const txt = `dare the name of the character`;
+    
+        return await citel.reply({
+            image: {
+                url: `${dare()}`
+            },
+            gifPlayback: true,
+            caption: txt
+        });
+    });
     //---------------------------------------------------------------------------
 cmd({
             pattern: "truth",
