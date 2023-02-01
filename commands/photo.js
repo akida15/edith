@@ -1,15 +1,20 @@
 const { addnote,cmd, sck1, delnote, allnotes, delallnote, tlang, botpic, runtime, prefix, Config } = require('../lib')
-    //---------------------------------------------------------------------------
+    //---------------------------------------------------------------------------//
+    function akidapic() {	
+        return new Promise( (resolve, reject) => {	
+          let LangG = getString("global");	
+          let todlink = [
+            "https://www.entoin.com/images/sllaye19.jpg",
+            "https://www.entoin.com/images/sllaye20.jpg",
+            "https://www.entoin.com/images/sllaye21.jpg"
+        ];	
+       const picsecktorh = todlink[Math.floor(Math.random() * todlink.length)];	
+       resolve(picsecktorh)	
+       })	
+        }	
+    //---------------------------------------------------------------------------//
 
-    const mikuArray = [
-        "https://www.entoin.com/images/sllaye19.jpg",
-        "https://www.entoin.com/images/sllaye20.jpg",
-        "https://www.entoin.com/images/sllaye21.jpg"
-    ];
-
-    const mikuSelection = mikuArray[Math.floor(Math.random() * mikuArray.length)];
-
-    cmd({
+cmd({
         pattern: "احزر",
         filename: __filename,
     },
@@ -17,7 +22,7 @@ const { addnote,cmd, sck1, delnote, allnotes, delallnote, tlang, botpic, runtime
         const alivtxt = `احزر اسم الشخصية`;
         let aliveMessage = {
             image: {
-                url: mikuSelection
+                url: await akidapic(),
             },
             caption: alivtxt,
             footer: tlang().footer,
