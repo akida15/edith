@@ -16,6 +16,73 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+const people = {};
+
+Secktor.cmd({
+        pattern: "I am",
+        desc: "Declare your presence",
+        category: "General",
+        filename: __filename,
+    },
+    async (Void, citel) => {
+        const userId = citel.message.from;
+        people[userId] = true;
+        return await citel.reply(`Okay, noted that you are here.`);
+    }
+);
+
+Secktor.cmd({
+        pattern: "pick two",
+        desc: "Pick two people from the list",
+        category: "General",
+        filename: __filename,
+    },
+    async (Void, citel) => {
+        const userIds = Object.keys(people);
+        if (userIds.length < 2) {
+            return await citel.reply(`Sorry, not enough people have declared their presence.`);
+        }
+        const selected = [userIds[Math.floor(Math.random() * userIds.length)], userIds[Math.floor(Math.random() * userIds.length)]];
+        return await citel.reply(`I have randomly selected two people: ${selected[0]} and ${selected[1]}`);
+    }
+);
+
+//---------------------------------------------------------------------------
+
+
+Secktor.cmd({
+    pattern: "guess",
+    desc: "Play a number guessing game",
+    category: "Fun",
+    filename: __filename,
+},
+async (Void, citel) => {
+    // Generate a random number between 1 and 100
+    const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+    await citel.reply("I'm thinking of a number between 1 and 100. Can you guess it?");
+
+    let userGuess = null;
+    let attempts = 0;
+
+    // Keep asking for the user's guess until they get it right
+    while (userGuess !== randomNumber) {
+        attempts += 1;
+        userGuess = await citel.ask("What's your guess?");
+
+        if (userGuess > randomNumber) {
+            await citel.reply("The number is lower.");
+        } else if (userGuess < randomNumber) {
+            await citel.reply("The number is higher.");
+        }
+    }
+
+    await citel.reply(`Congratulations! You guessed the number in ${attempts} attempts.`);
+});
+//---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
 cmd({
             pattern: "ادخل",
             desc: "",
