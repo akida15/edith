@@ -21,7 +21,7 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 const people = {};
 
 cmd({
-        pattern: "Ij",
+        pattern: "nino",
         desc: "Declare your presence",
         category: "General",
         filename: __filename,
