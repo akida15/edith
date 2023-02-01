@@ -9,18 +9,18 @@
  * @version 0.0.6
  **/
 
-const { dare, truth, random_question } = require('../lib/truth-dare.js')
+const { dare, truth, kt } = require('../lib/truth-dare.js')
 const axios = require('axios')
 const { cmd } = require('../lib')
     //---------------------------------------------------------------------------
 cmd({
-            pattern: "jeje",
+            pattern: "kt",
             desc: "Random Question.",
             category: "fun",
             filename: __filename,
         },
         async(Void, citel, text) => {
-            return await citel.reply(`${random_question()}`);
+            return await citel.reply(`${kt()}`);
         }
     )
     //---------------------------------------------------------------------------
