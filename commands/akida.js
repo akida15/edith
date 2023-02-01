@@ -7,9 +7,7 @@ Secktor.cmd({
     filename: __filename,
 },
 async(Void, citel) => {
-    if (citel.chat.id !== "groupJID") {
-        return;
-        }
+
     return await citel.reply(`✠═ • ═  •༺⊱╠💠╣⊰༻• ═ • ═✠
     ↫ ⟦ اخـر فـصـ📓ـول الـمـانـجـا صـدورا ⟧
     ⊹⊱≼━━━⌬〔💠〕⌬━━━≽⊰⊹
