@@ -14,13 +14,13 @@ const axios = require('axios')
 const { cmd } = require('../lib')
     //---------------------------------------------------------------------------
 cmd({
-            pattern: "question",
+            pattern: "jeje",
             desc: "Random Question.",
             category: "fun",
             filename: __filename,
         },
         async(Void, citel, text) => {
-            return await citel.reply(`${random_question()}`);
+            return await citel.reply(`${amount_of_questions()}`);
         }
     )
     //---------------------------------------------------------------------------
