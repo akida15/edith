@@ -3,7 +3,8 @@ const axios = require('axios')
 const speed = require('performance-now')
 //---------------------------------------------------------------------------
 
-const axios = require('axios');
+
+
 
 const API_KEY = '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';
 
