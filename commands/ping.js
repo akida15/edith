@@ -17,26 +17,6 @@ const fetch = require('node-fetch')
 
     //---------------------------------------------------------------------------
 
-cmd({ pattern: "sdf" }, async(Void, citel, text) => {
-const randomNumber = Math.floor(Math.random() * 10) + 1;
-let reply = أسقطت النرد: ${randomNumber};
-
-if (randomNumber === 5) {
-const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
-const participants = citel.isGroup ? await groupMetadata.participants : "";
-let members = participants.map(u => u.id)
-const randomUser = members[Math.floor(Math.random() * members.length)];
-reply += \n\n العضو المحظوظ: @${randomUser.split('@')[0]} يحكم عليه!;
-}
-
-return citel.reply(reply);
-});
-
-
-cmd({ pattern: "قرعة" }, async(Void, citel, text) => {
-  const randomNumber = Math.floor(Math.random() * 6) + 1;
-  return citel.reply(`أسقطت النرد: ${randomNumber}`);
-});
 
 
 cmd({
