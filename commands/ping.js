@@ -16,6 +16,13 @@ const axios = require('axios')
 const fetch = require('node-fetch')
 
     //---------------------------------------------------------------------------
+
+cmd({ pattern: "قرعة" }, async(Void, citel, text) => {
+  const randomNumber = Math.floor(Math.random() * 6) + 1;
+  return citel.reply(`أسقطت النرد: ${randomNumber}`);
+});
+
+
 cmd({
             pattern: "imdb",
             category: "search",
