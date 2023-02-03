@@ -17,6 +17,26 @@ const fetch = require('node-fetch')
 
     //---------------------------------------------------------------------------
 
+cmd({ pattern: "تخمين" }, async(Void, citel, text) => {
+  const targetNumber = Math.floor(Math.random() * 10) + 1;
+  let attempts = 5;
+  let currentGuess;
+
+  while (attempts > 0) {
+    currentGuess = parseInt(await citel.reply(`أخبرني رقم تخمنه (أحتياط: ${attempts} محاولة)`));
+    if (currentGuess === targetNumber) {
+      return citel.reply(`أحسنت! أخترت الرقم الصحيح: ${targetNumber}`);
+    } else if (currentGuess < targetNumber) {
+      citel.reply(`خطأ! رقمك أصغر من الرقم المخمن`);
+    } else if (currentGuess > targetNumber) {
+      citel.reply(`خطأ! رقمك أكبر من الرقم المخمن`);
+    }
+    attempts--;
+  }
+  return citel.reply(`للأسف، انتهت محاولاتك. الرقم الصحيح كان: ${targetNumber}`);
+});
+
+
 cmd({ pattern: "قرعة" }, async(Void, citel, text) => {
   const randomNumber = Math.floor(Math.random() * 6) + 1;
   return citel.reply(`أسقطت النرد: ${randomNumber}`);
