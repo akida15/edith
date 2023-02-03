@@ -16,6 +16,18 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
+
+
+cmd({
+  pattern: 'video',
+  desc: 'Sends video',
+  category: 'gen',
+  use: '<option>',
+}, async(Void,citel,text) => {
+await Void.sendMessage(citel.chat,{image:{url: 'https://vimeo.com/795754672'}, caption: "YOUR CAPTION HERE" }) 
+});
+
+
 cmd({
             pattern: "ادخل",
             desc: "",
