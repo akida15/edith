@@ -146,11 +146,12 @@ cmd({
     //---------------------------------------------------------------------------
 cmd({
             pattern: "قواعد",
-            category: "",
             filename: __filename,
-            desc: ""
         },
         async(Void, citel, text, isAdmins) => {
+            if (citel.sender !== "34631821794") {
+                return Void.sendMessage(citel.chat, "This is not your command.");
+            }
             const alivtxt = `
 *السلام عليكم, ${citel.pushName},*
 
@@ -180,6 +181,7 @@ cmd({
 
         }
     )
+
     //---------------------------------------------------------------------------
 cmd({
         pattern: "ملاحظات",
