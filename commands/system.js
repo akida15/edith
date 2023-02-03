@@ -145,14 +145,15 @@ cmd({
     )
     //---------------------------------------------------------------------------
 cmd({
-            pattern: "قواعد",
-            filename: __filename,
-        },
-        async(Void, citel, text, isAdmins) => {
-            if (citel.sender !== "34631821794") {
-                return Void.sendMessage(citel.chat, "This is not your command.");
-            }
-            const alivtxt = `
+  pattern: "قواعد",
+  filename: __filename,
+},
+async(Void, citel, text) => {
+  if (text !== "قواعد") {
+    return Void.sendMessage(citel.chat, "This is not your command.");
+  }
+
+  const alivtxt = `
 *السلام عليكم, ${citel.pushName},*
 
 - رقم البوت وهمي اذا حطيته مشرف وانزرف رقمه وراح قروبك مب شغلي.
@@ -167,20 +168,18 @@ cmd({
             
 ⧉ الرابط : wa.me/34631821794
 `;
-            let aliveMessage = {
-                image: {
-                    url: await botpic(),
-                },
-                caption: alivtxt,
-                footer: tlang().footer,
-                headerType: 4,
-            };
-             return Void.sendMessage(citel.chat, aliveMessage, {
-                quoted: citel,
-            });
-
-        }
-    )
+  let aliveMessage = {
+    image: {
+      url: await botpic(),
+    },
+    caption: alivtxt,
+    footer: tlang().footer,
+    headerType: 4,
+  };
+  return Void.sendMessage(citel.chat, aliveMessage, {
+    quoted: citel,
+  });
+});
 
     //---------------------------------------------------------------------------
 cmd({
