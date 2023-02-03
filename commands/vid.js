@@ -8,5 +8,5 @@ cmd({
   category: 'gen',
   use: '<option>',
 }, async(Void,citel,text) => {
-await Void.sendMessage(citel.chat,{image:{url: './vid/Parasyte.mp4'}, caption: "YOUR CAPTION HERE" }) 
+await Void.sendMessage(citel.chat,{image:{url: 'https://vimeo.com/795754672'}, caption: "YOUR CAPTION HERE" }) 
 });
