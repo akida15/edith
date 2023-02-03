@@ -18,20 +18,22 @@ const fetch = require('node-fetch')
     //---------------------------------------------------------------------------
 
 cmd({
-  pattern: "تخمين",
-  filename: __filename,
-},
-async (Void, citel, text) => {
-  const secretNumber = Math.floor(Math.random() * 10) + 1;
-  let message = "ختمن على رقم ما بين 1 و 10. أحتياط: 1 محاولة. \n\n إدخل رقمك الآن.";
-  const sentMessage = await citel.reply(message);
-  const guess = await citel.awaitResponse(sentMessage);
-
-  if (parseInt(guess) === secretNumber) {
-    await citel.reply("صحيح! أحسنت!");
-  } else {
-    await citel.reply(`خاطئ. الرقم السري كان ${secretNumber}.`);
-  }
+pattern: "رقمي",
+filename: __filename
+}, async (Void, citel, text) => {
+const number = Math.floor(Math.random() * 10) + 1;
+citel.reply("خمن رقمي ما بين 1 و 10").then(async msg => {
+citel.on("message", async (message) => {
+if (message.body.includes("عدد")) {
+const guess = parseInt(message.body.split(" ")[1]);
+if (guess === number) {
+msg.edit(`العدد الصحيح هو ${number}, حصلت على الفوز! 🎉`);
+} else {
+msg.edit(`العدد الصحيح هو ${number}, للأسف لم تحصل على الفوز! 💔`);
+}
+}
+});
+});
 });
 
 
