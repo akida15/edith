@@ -17,23 +17,19 @@ const fetch = require('node-fetch')
 
     //---------------------------------------------------------------------------
 
-cmd({
-pattern: "رقمي",
-filename: __filename
-}, async (Void, citel, text) => {
-const number = Math.floor(Math.random() * 10) + 1;
-citel.reply("خمن رقمي ما بين 1 و 10").then(async msg => {
-citel.on("message", async (message) => {
-if (m.sender.includes("عدد")) {
-const guess = parseInt(m.msender.split(" ")[1]);
-if (guess === number) {
-msg.edit(`العدد الصحيح هو ${number}, حصلت على الفوز! 🎉`);
-} else {
-msg.edit(`العدد الصحيح هو ${number}, للأسف لم تحصل على الفوز! 💔`);
+cmd({ pattern: "sdf" }, async(Void, citel, text) => {
+const randomNumber = Math.floor(Math.random() * 10) + 1;
+let reply = أسقطت النرد: ${randomNumber};
+
+if (randomNumber === 5) {
+const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+const participants = citel.isGroup ? await groupMetadata.participants : "";
+let members = participants.map(u => u.id)
+const randomUser = members[Math.floor(Math.random() * members.length)];
+reply += \n\n العضو المحظوظ: @${randomUser.split('@')[0]} يحكم عليه!;
 }
-}
-});
-});
+
+return citel.reply(reply);
 });
 
 
