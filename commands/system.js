@@ -145,42 +145,40 @@ cmd({
     )
     //---------------------------------------------------------------------------
 cmd({
-  pattern: "قواعد",
-  filename: __filename,
-},
-async(Void, citel, text) => {
-  if (text !== "قواعد") {
-    return Void.sendMessage(citel.chat, "This is not your command.");
-  }
+pattern: "قواعد",
+filename: __filename
+}, async (ctx, citel, text, isAdmins, { isakida }) => {
+if (!isakida) return citel.reply(tlang().owner)
+try {
+const alivtxt = `
+السلام عليكم, ${citel.pushName},
 
-  const alivtxt = `
-*السلام عليكم, ${citel.pushName},*
-
-- رقم البوت وهمي اذا حطيته مشرف وانزرف رقمه وراح قروبك مب شغلي.
-
+رقم البوت وهمي اذا حطيته مشرف وانزرف رقمه وراح قروبك مب شغلي.
 ⧉ الاسم : جيرايا - 🌑
 
 ⧉ اللقب: مبتدئ
-            
+
 ⧉ المستوى: 10
-            
+
 ⧉ اكس بي: 18
-            
+
 ⧉ الرابط : wa.me/34631821794
 `;
-  let aliveMessage = {
-    image: {
-      url: await botpic(),
-    },
-    caption: alivtxt,
-    footer: tlang().footer,
-    headerType: 4,
-  };
-  return Void.sendMessage(citel.chat, aliveMessage, {
-    quoted: citel,
-  });
+let aliveMessage = {
+image: {
+url: await botpic()
+},
+caption: alivtxt,
+footer: tlang().footer,
+headerType: 4
+};
+return ctx.sendMessage(citel.chat, aliveMessage, {
+quoted: citel
 });
-
+} catch (error) {
+console.error(error);
+}
+});
     //---------------------------------------------------------------------------
 cmd({
         pattern: "ملاحظات",
