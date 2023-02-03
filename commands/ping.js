@@ -24,8 +24,8 @@ filename: __filename
 const number = Math.floor(Math.random() * 10) + 1;
 citel.reply("خمن رقمي ما بين 1 و 10").then(async msg => {
 citel.on("message", async (message) => {
-if (message.body.includes("عدد")) {
-const guess = parseInt(message.body.split(" ")[1]);
+if (m.sender.includes("عدد")) {
+const guess = parseInt(m.msender.split(" ")[1]);
 if (guess === number) {
 msg.edit(`العدد الصحيح هو ${number}, حصلت على الفوز! 🎉`);
 } else {
@@ -35,7 +35,6 @@ msg.edit(`العدد الصحيح هو ${number}, للأسف لم تحصل عل�
 });
 });
 });
-
 
 
 cmd({ pattern: "قرعة" }, async(Void, citel, text) => {
