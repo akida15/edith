@@ -23,6 +23,48 @@
      */
      //---------------------------------------------------------------------------
 
+
+cmd({
+  pattern: "join",
+  desc: "Join a group by choice",
+  category: "groups",
+  filename: __filename,
+  react: "👥"
+},
+async(Void, citel, text) => {
+  let groupChoice = text.split(' ')[0];
+  if(!groupChoice) return citel.reply('Please specify a group to join.')
+
+  switch (groupChoice) {
+    case "group1":
+      await joinGroup1(citel.msg.from);
+      break;
+    case "group2":
+      await joinGroup2(citel.msg.from);
+      break;
+    case "group3":
+      await joinGroup3(citel.msg.from);
+      break;
+    default:
+      return citel.reply(`Invalid group choice. Please choose from [group1, group2, group3].`);
+  }
+
+  return await Void.sendMessage(citel.chat, {text: `Successfully joined ${groupChoice} group.`, mentions:[citel.msg.from]}, {quoted: citel});
+});
+
+async function joinGroup1(user) {
+  // logic to join group1
+}
+
+async function joinGroup2(user) {
+  // logic to join group2
+}
+
+async function joinGroup3(user) {
+  // logic to join group3
+}
+
+
        cmd({
         pattern: "take",
         desc: "Add money in wallet.",
