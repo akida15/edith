@@ -89,24 +89,7 @@ async(Void, citel, text,{ isCreator }) => {
 
        const deduct = await eco.deduct(user1, secktor, value[0]);
        const give = await eco.give(user2, secktor, value[0]);
-       let buttons = [{
-           buttonId: `${prefix}wallet`,
-           buttonText: {
-               displayText: "Wallet👛",
-           },
-           type: 1,
-       },
-       {
-           buttonId: `${prefix}Bank`,
-           buttonText: {
-               displayText: "Bank🏦",
-           },
-           type: 1,
-       },
-   ];
-   return await Void.sendButtonText(citel.chat, buttons, `*تم تحويل ${value[0]} من حسابك*`, `${Config.ownername.split(' ')[0]}-Economy
-Version: 0.0.6`, citel);
-
+       return await Void.sendText(citel.chat,`*تم تحويل ${value[0]} من حسابك*`);
 
 }
 )
@@ -127,7 +110,7 @@ Version: 0.0.6`, citel);
         if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-         return await Void.sendText(citel.chat,`* لديك : *${balance.wallet}  بيلي`);
+         return await Void.sendText(citel.chat,`* لديك :*${balance.wallet}  بيلي`);
      
      }
      )
