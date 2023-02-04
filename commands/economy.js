@@ -23,25 +23,28 @@
      */
      //---------------------------------------------------------------------------
 
-      cmd({
+   cmd({
   pattern: "take",
-  desc: "Remove money from wallet.",
+  desc: "Take money from wallet.",
   category: "economy",
   filename: __filename,
-  react: "💷"
+  react: "💰"
 },
-async(Void, citel, text,{ isCreator }) => {
-  if(!isCreator) return
+async(Void, citel, text, { isCreator }) => {
+  if (!isCreator) return;
 
-  const secktor = "secktor"
+  const sector = "sector";
   let users = citel.mentionedJid || false;
-  if(!users) return citel.reply('Please mention the users to remove money from their wallets.')
+  if (!users) return citel.reply('Please mention the users to take money from their wallets.');
+
   for (const user of users) {
-    await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
+    await eco.deduct(user, sector, parseInt(text.split(' ')[0]));
   }
 
-  return await Void.sendMessage(citel.chat,{text: `Removed 📈 ${parseInt(text.split(' ')[0])} from @${users.split('@')[0]}'s wallet🛸.`,mentions:[users]},{quoted:citel})
-
+  return await Void.sendMessage(citel.chat, {
+    text: `Taken 💰 ${parseInt(text.split(' ')[0])} from @${users.split('@')[0]} wallet.`,
+    mentions: [users]
+  }, { quoted: citel });
 });
 
 
