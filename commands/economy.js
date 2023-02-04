@@ -113,40 +113,24 @@ Version: 0.0.6`, citel);
 
     //---------------------------------------------------------------------------
     cmd({
-       pattern: "اموالي",
-       filename: __filename,
-   },
-   async(Void, citel, text,{ isCreator }) => {
-       let zerogroup = (await sck.findOne({
-           id: citel.chat,
-       })) || (await new sck({
-               id: citel.chat,
-           })
-           .save());
-       let mongoschemas = zerogroup.economy || "false";
-       if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
+        pattern: "اموالي",
+        filename: __filename,
+    },
+    async(Void, citel, text,{ isCreator }) => {
+        let zerogroup = (await sck.findOne({
+            id: citel.chat,
+        })) || (await new sck({
+                id: citel.chat,
+            })
+            .save());
+        let mongoschemas = zerogroup.economy || "false";
+        if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
         const secktor = "secktor"
         const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-        let buttons = [{
-           buttonId: `${prefix}deposit`,
-           buttonText: {
-               displayText: "Deposit",
-           },
-           type: 1,
-       },
-       {
-           buttonId: `${prefix}Bank`,
-           buttonText: {
-               displayText: "Bank🏦",
-           },
-           type: 1,
-       },
-   ];
-   return await Void.sendButtonText(citel.chat, buttons, `*${citel.pushName}لديك:*\n\n${balance.wallet} بيلي`, `${Config.ownername.split(' ')[0]}-Economy
-Version: 0.0.6`, citel);
-
-   }
-)
+        return await Void.sendMessage(citel.chat, `*${citel.pushName}لديك:*\n\n${balance.wallet} بيلي`)
+    }
+    )
+    
 
     //---------------------------------------------------------------------------
    cmd({
@@ -169,7 +153,7 @@ Version: 0.0.6`, citel);
 
     //---------------------------------------------------------------------------
     cmd({
-       pattern: "take",
+       pattern: "جرد",
        filename: __filename,
        react: "👍"
    },
