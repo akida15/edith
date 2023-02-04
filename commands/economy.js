@@ -113,26 +113,25 @@ Version: 0.0.6`, citel);
 
     //---------------------------------------------------------------------------
     cmd({
-   pattern: "اموالي",
-   filename: __filename,
-},
-async(Void, citel, text,{ isCreator }) => {
-   let zerogroup = (await sck.findOne({
-       id: citel.chat,
-   })) || (await new sck({
-           id: citel.chat,
-       })
-       .save());
-   let mongoschemas = zerogroup.economy || "false";
-   if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
-    const secktor = "secktor"
-    const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-    return await Void.sendText(citel.chat,`*${citel.pushName}لديك:*\n\n${balance.wallet} بيلي`);
-
-}
-)
-
-    
+        pattern: "اموالي",
+        filename: __filename,
+     },
+     async(Void, citel, text,{ isCreator }) => {
+        let zerogroup = (await sck.findOne({
+            id: citel.chat,
+        })) || (await new sck({
+                id: citel.chat,
+            })
+            .save());
+        let mongoschemas = zerogroup.economy || "false";
+        if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
+         const secktor = "secktor"
+         const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
+         return await Void.sendText(citel.chat,`* لديك : *${balance.wallet}  بيلي`);
+     
+     }
+     )
+     
 
     //---------------------------------------------------------------------------
    cmd({
