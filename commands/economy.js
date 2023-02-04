@@ -13,10 +13,7 @@ const ty = eco.connect(mongodb);
 
 cmd({
         pattern: "resetwallet",
-        desc: "reset wallet of quoted user.",
-        category: "economy",
         filename: __filename,
-        react: "💷"
     },
     async(Void, citel, text,{ isCreator }) => {
        let zerogroup = (await sck.findOne({
@@ -39,10 +36,7 @@ cmd({
     //---------------------------------------------------------------------------
     cmd({
        pattern: "lb",
-       desc: "check leaderboard.",
-       category: "economy",
        filename: __filename,
-       react: "💷"
    },
    async(Void, citel, text,{ isCreator }) => {
    let h = await eco.lb('secktor',10);
@@ -66,10 +60,7 @@ str+= `*${i+1}*\n╭─────────────◆\n│ *Name:-* _${
 
 cmd({
    pattern: "transfer",
-   desc: "transfer gold.",
-   category: "economy",
    filename: __filename,
-   react: "💷"
 },
 async(Void, citel, text,{ isCreator }) => {
    let zerogroup = (await sck.findOne({
@@ -123,10 +114,7 @@ Version: 0.0.6`, citel);
     //---------------------------------------------------------------------------
     cmd({
        pattern: "wallet",
-       desc: "shows wallet.",
-       category: "economy",
        filename: __filename,
-       react: "💷"
    },
    async(Void, citel, text,{ isCreator }) => {
        let zerogroup = (await sck.findOne({
@@ -163,10 +151,7 @@ Version: 0.0.6`, citel);
     //---------------------------------------------------------------------------
    cmd({
         pattern: "give",
-        desc: "Add money in wallet.",
-        category: "economy",
         filename: __filename,
-        react: "💷"
     },
     async(Void, citel, text,{ isCreator }) => {
         if(!isCreator) return
@@ -185,10 +170,8 @@ Version: 0.0.6`, citel);
     //---------------------------------------------------------------------------
     cmd({
        pattern: "take",
-       desc: "Add money in wallet.",
-       category: "economy",
        filename: __filename,
-       react: "💷"
+       react: "👍"
    },
    async(Void, citel, text,{ isCreator }) => {
        if(!isCreator) return
@@ -206,40 +189,3 @@ for (const user of users) {
 )
 
     //---------------------------------------------------------------------------
-    cmd({
-       pattern: "bank",
-       desc: "shows bank amount.",
-       category: "economy",
-       filename: __filename,
-       react: "💷"
-   },
-   async(Void, citel, text,{ isCreator }) => {
-       let zerogroup = (await sck.findOne({
-           id: citel.chat,
-       })) || (await new sck({
-               id: citel.chat,
-           })
-           .save());
-       let mongoschemas = zerogroup.economy || "false";
-       if (mongoschemas == "false") return citel.reply("*🚦Economy* is not active in current group.");
-       const balance = await eco.balance(citel.sender, "secktor"); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-       let buttons = [{
-           buttonId: `${prefix}slot`,
-           buttonText: {
-               displayText: "Slot🎰",
-           },
-           type: 1,
-       },
-       {
-           buttonId: `${prefix}wallet`,
-           buttonText: {
-               displayText: "Wallet👛",
-           },
-           type: 1,
-       },
-   ];
-   return await Void.sendButtonText(citel.chat, buttons, `🍀User: ${citel.pushName}\n\n_🪙${balance.bank}/${balance.bankCapacity}_`, `${Config.ownername.split(' ')[0]}-Economy
-Version: 0.0.6`, citel);
-
-   }
-)
