@@ -36,7 +36,7 @@
          const secktor = "secktor"
          let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
          if(!users) return citel.reply('Please give me user to add money.')
-         await eco.take(users, secktor, parseInt(text.split(' ')[0]));
+         await eco.deduct(users, secktor, parseInt(text.split(' ')[0]));
         return await Void.sendMessage(citel.chat,{text: `Added 📈 ${parseInt(text.split(' ')[0])} to @${users.split('@')[0]} wallet🛸.`,mentions:[users]},{quoted:citel})
 
     }
