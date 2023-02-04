@@ -29,7 +29,7 @@ cmd({
    //---------------------------------------------------------------------------
 
        cmd({
-       pattern: "البنك",
+       pattern: "1البنك",
        filename: __filename,
    },
    async(Void, citel, text,{ isCreator }) => {
