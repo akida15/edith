@@ -23,27 +23,27 @@
      */
      //---------------------------------------------------------------------------
 
-       cmd({
-        pattern: "take",
-        desc: "Add money in wallet.",
-        category: "economy",
-        filename: __filename,
-        react: "💷"
-    },
-    async(Void, citel, text,{ isCreator }) => {
-        if(!isCreator) return
+      cmd({
+  pattern: "take",
+  desc: "Remove money from wallet.",
+  category: "economy",
+  filename: __filename,
+  react: "💷"
+},
+async(Void, citel, text,{ isCreator }) => {
+  if(!isCreator) return
 
-         const secktor = "secktor"
-         let users = citel.mentionedJid || false;
-if(!users) return citel.reply('Please mention the users to add money to their wallets.')
-for (const user of users) {
-  await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
-}
+  const secktor = "secktor"
+  let users = citel.mentionedJid || false;
+  if(!users) return citel.reply('Please mention the users to remove money from their wallets.')
+  for (const user of users) {
+    await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
+  }
 
-        return await Void.sendMessage(citel.chat,{text: `Added 📈 ${parseInt(text.split(' ')[0])} to @${users.split('@')[0]} wallet🛸.`,mentions:[users]},{quoted:citel})
+  return await Void.sendMessage(citel.chat,{text: `Removed 📈 ${parseInt(text.split(' ')[0])} from @${users.split('@')[0]}'s wallet🛸.`,mentions:[users]},{quoted:citel})
 
-    }
-)
+});
+
 
  cmd({
          pattern: "daily",
