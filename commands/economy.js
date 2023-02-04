@@ -23,7 +23,7 @@
      */
      //---------------------------------------------------------------------------
 
-     cmd({
+       cmd({
         pattern: "take",
         desc: "Add money in wallet.",
         category: "economy",
@@ -34,13 +34,17 @@
         if(!isCreator) return
 
          const secktor = "secktor"
-         let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
-         if(!users) return citel.reply('Please give me user to add money.')
-         await eco.deduct(users, secktor, parseInt(text.split(' ')[0]));
+         let users = citel.mentionedJid || false;
+if(!users) return citel.reply('Please mention the users to add money to their wallets.')
+for (const user of users) {
+  await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
+}
+
         return await Void.sendMessage(citel.chat,{text: `Added 📈 ${parseInt(text.split(' ')[0])} to @${users.split('@')[0]} wallet🛸.`,mentions:[users]},{quoted:citel})
 
     }
 )
+
  cmd({
          pattern: "daily",
          desc: "daily gold.",
