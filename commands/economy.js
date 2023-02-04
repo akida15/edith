@@ -72,7 +72,7 @@ async(Void, citel, text, { isCreator }) => {
  }
  )
     //---------------------------------------------------------------------------
-     cmd({
+    cmd({
         pattern: "lb",
         desc: "check leaderboard.",
         category: "economy",
@@ -98,7 +98,6 @@ str+= `*${i+1}*\n╭─────────────◆\n│ *Name:-* _${
 	     citel.reply(str,{mentions:arr})
 	     
      })
-
 cmd({
     pattern: "transfer",
     desc: "transfer gold.",
