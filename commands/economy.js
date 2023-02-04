@@ -12,7 +12,7 @@ const ty = eco.connect(mongodb);
     //---------------------------------------------------------------------------
 
 cmd({
-        pattern: "resetwallet",
+        pattern: "صفر",
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
@@ -23,19 +23,19 @@ cmd({
            })
            .save());
        let mongoschemas = zerogroup.economy || "false";
-       if (mongoschemas == "false") return citel.reply("*🚦Economy* is not active in current group.");
+       if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
     if(!isCreator) return citel.reply(tlang().owner)
        let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
-   if(!users) return citel.reply('Please give me user.')
+   if(!users) return citel.reply('منشن احد')
        const balance  = await eco.balance(users, "secktor")
        await eco.deduct(users, "secktor", balance.wallet);
-       return await citel.reply(`⛩️ User: @${users.split('@')[0]} \n *🧧 @${users.split('@')[0]} lost all 🪙 in wallet.*\n_Now live with that poverty.🫡_`,{mentions:[users]})
+       return await citel.reply(`تم تصفير البيلي الخاص ب : @${users.split('@')[0]} `,{mentions:[users]})
 }
 )
    //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
     cmd({
-       pattern: "lb",
+       pattern: "ترتيب_البيلي",
        filename: __filename,
    },
    async(Void, citel, text,{ isCreator }) => {
@@ -59,7 +59,7 @@ str+= `*${i+1}*\n╭─────────────◆\n│ *Name:-* _${
     })
 
 cmd({
-   pattern: "transfer",
+   pattern: "تحويل",
    filename: __filename,
 },
 async(Void, citel, text,{ isCreator }) => {
@@ -70,22 +70,22 @@ async(Void, citel, text,{ isCreator }) => {
        })
        .save());
    let mongoschemas = zerogroup.economy || "false";
-   if (mongoschemas == "false") return citel.reply("*🚦Economy* is not active in current group.");
+   if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
    let value = text.trim().split(" ");
-   if (value[0] === "") return citel.reply(`Use ${prefix}transfer 100 @user`);
+   if (value[0] === "") return citel.reply(`مثال : .تحويل 1000 @منشن احد`);
    let user = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
-   if(!user) return citel.reply('Please give me any user🤦‍♂️.');
+   if(!user) return citel.reply('منشن احد');
    const secktor = "secktor"
        const user1 = citel.sender
        const user2 = user
        const word = value[0];
        const code = value[1];
        let d = parseInt(word)
-       if (!d) return citel.reply("check your text plz u r using the command in a wrong way👀");
+       if (!d) return citel.reply("لا تستخدم الأمر بشكل صحيح");
        const balance = await eco.balance(user1, secktor);
        let a = (balance.wallet) < parseInt(word)
        //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-       if(a == true) return citel.reply("you dont have sufficient money to transfer👎");
+       if(a == true) return citel.reply("يا فقير انت وما عندك ذا المقدار وتبي تحوله ؟");
 
        const deduct = await eco.deduct(user1, secktor, value[0]);
        const give = await eco.give(user2, secktor, value[0]);
@@ -104,7 +104,7 @@ async(Void, citel, text,{ isCreator }) => {
            type: 1,
        },
    ];
-   return await Void.sendButtonText(citel.chat, buttons, `*📠 Transaction successful of ${value[0]} 💰*`, `${Config.ownername.split(' ')[0]}-Economy
+   return await Void.sendButtonText(citel.chat, buttons, `*تم تحويل ${value[0]} من حسابك*`, `${Config.ownername.split(' ')[0]}-Economy
 Version: 0.0.6`, citel);
 
 
@@ -113,7 +113,7 @@ Version: 0.0.6`, citel);
 
     //---------------------------------------------------------------------------
     cmd({
-       pattern: "wallet",
+       pattern: "اموالي",
        filename: __filename,
    },
    async(Void, citel, text,{ isCreator }) => {
@@ -124,7 +124,7 @@ Version: 0.0.6`, citel);
            })
            .save());
        let mongoschemas = zerogroup.economy || "false";
-       if (mongoschemas == "false") return citel.reply("*🚦Economy* is not active in current group.");
+       if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
         const secktor = "secktor"
         const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
         let buttons = [{
@@ -142,7 +142,7 @@ Version: 0.0.6`, citel);
            type: 1,
        },
    ];
-   return await Void.sendButtonText(citel.chat, buttons, `*👛 ${citel.pushName}'s Purse:*\n\n_🪙${balance.wallet}_`, `${Config.ownername.split(' ')[0]}-Economy
+   return await Void.sendButtonText(citel.chat, buttons, `*${citel.pushName}لديك:*\n\n${balance.wallet} بيلي`, `${Config.ownername.split(' ')[0]}-Economy
 Version: 0.0.6`, citel);
 
    }
@@ -150,7 +150,7 @@ Version: 0.0.6`, citel);
 
     //---------------------------------------------------------------------------
    cmd({
-        pattern: "give",
+        pattern: "ضف",
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
@@ -158,11 +158,11 @@ Version: 0.0.6`, citel);
 
          const secktor = "secktor"
          let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
-         if(!users) return citel.reply('Please give me user to add money.')
+         if(!users) return citel.reply('منشن من تبغى تضيف له/م')
          users.forEach(async (user) => {
            await eco.give(user, secktor, parseInt(text.split(' ')[0]));
          });
-        return await Void.sendMessage(citel.chat,{text: `Added 📈 ${parseInt(text.split(' ')[0])} to ${users.length} wallet(s)🛸.`,mentions:users},{quoted:citel})
+        return await Void.sendMessage(citel.chat,{text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} `,mentions:users},{quoted:citel})
     }
 )
 
@@ -178,12 +178,12 @@ Version: 0.0.6`, citel);
 
         const secktor = "secktor"
         let users = citel.mentionedJid || false;
-if(!users) return citel.reply('Please mention the users to add money to their wallets.')
+if(!users) return citel.reply('منشن مين تبغى تجرد منه/م')
 for (const user of users) {
  await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
 }
 
-       return await Void.sendMessage(citel.chat,{text: `Added 📈 ${parseInt(text.split(' ')[0])} to @${users.split('@')[0]} wallet🛸.`,mentions:[users]},{quoted:citel})
+       return await Void.sendMessage(citel.chat,{text: `تم اخذت ${parseInt(text.split(' ')[0])} من @${users.split('@')[0]}`,mentions:[users]},{quoted:citel})
 
    }
 )
