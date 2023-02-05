@@ -18,8 +18,6 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
-
-
 cmd({
         pattern: "tag",
         filename: __filename,
@@ -38,10 +36,12 @@ cmd({
         let textt = `${text ? text : "السلام عليكم"}\n`
         let count = 1;
         for (let mem of groupAdmins) {
+            if (!mem.id) continue;
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
         for (let mem of participants) {
+            if (!mem.id) continue;
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
