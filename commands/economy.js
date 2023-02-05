@@ -52,6 +52,7 @@ cmd({
                tname = Void.getName(h[i].userID)
            }
 str+= `\n *⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n\n`
+    arr.push(h[i].userID)
     }
         citel.reply(str,{mentions:arr})
         
