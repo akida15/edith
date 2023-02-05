@@ -51,7 +51,7 @@ cmd({
            } else {
                tname = Void.getName(h[i].userID)
            }
-str+= `\n *⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n\n`
+str+= `\n *⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n`
     arr.push(h[i].userID)
     }
         citel.reply(str,{mentions:arr})
@@ -145,7 +145,7 @@ async(Void, citel, text,{ isCreator }) => {
        if(!isCreator) return
 
         const secktor = "secktor"
-        let users = citel.mentionedJid || false;
+        let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
 if(!users) return citel.reply('منشن مين تبغى تجرد منه/م')
 for (const user of users) {
  await eco.deduct(user, secktor, parseInt(text.split(' ')[0]));
