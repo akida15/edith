@@ -34,7 +34,7 @@ async(Void, citel, text,{ isCreator }) => {
     let count = 1;
     for (let mem of groupAdmins) {
         if (mem && mem.id) {
-            textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
+            textt += `🤢 ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
     }
