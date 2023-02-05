@@ -46,7 +46,7 @@ cmd({
     for(let i=0;i<h.length;i++){
            let username = await sck1.findOne({ id: h[i].userID })
            var tname;
-           if (username.name && username.name !== undefined) {
+           if (username && username !== undefined) {
                tname = username.name
            } else {
                tname = Void.getName(h[i].userID)
@@ -110,7 +110,9 @@ async(Void, citel, text,{ isCreator }) => {
         if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-         return await citel.reply(`*لديك :${balance.wallet}  بيلي*`)
+         return await citel.reply(`╮──────✧ا✧───────╭
+│ ⦿ - ${balance.wallet} بيلي 
+╯──────✧ا✧───────╰`)
      
      }
      )
