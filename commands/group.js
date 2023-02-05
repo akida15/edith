@@ -32,14 +32,14 @@ async(Void, citel, text,{ isCreator }) => {
 
     let textt = `${text ? text : "السلام عليكم"}\n`
     let count = 1;
-    for (let mem of participants) {
+    for (let mem of groupAdmins) {
         if (mem && mem.id) {
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
     }
 
-    for (let mem of groupAdmins) {
+    for (let mem of participants) {
         if (mem && mem.id) {
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
