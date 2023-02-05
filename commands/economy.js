@@ -89,7 +89,7 @@ async(Void, citel, text,{ isCreator }) => {
 
        const deduct = await eco.deduct(user1, secktor, value[0]);
        const give = await eco.give(user2, secktor, value[0]);
-       return await citel.reply(`*تم تحويل ${value[0]} من حسابك*`,{mentions:[users]})
+       return await citel.reply(`*تم تحويل ${value[0]} من حسابك*`)
 
 }
 )
@@ -110,7 +110,7 @@ async(Void, citel, text,{ isCreator }) => {
         if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-         return await citel.reply(`*لديك :${balance.wallet}  بيلي*`,{mentions:[users]})
+         return await citel.reply(`*لديك :${balance.wallet}  بيلي*`)
      
      }
      )
