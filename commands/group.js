@@ -26,13 +26,14 @@ async(Void, citel, text,{ isCreator }) => {
     if (!citel.isGroup) return citel.reply(tlang().group);
     const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
     const participants = citel.isGroup ? await groupMetadata.participants : "";
+    const groupAdminss = citel.isGroup ? await groupMetadata.groupAdmins : "";
     const groupAdmins = await getAdmin(Void, citel)
     const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
     if (!isAdmins) return citel.reply(tlang().admin);
 
     let textt = `${text ? text : "السلام عليكم"}\n`
     let count = 1;
-    for (let mem of groupAdmins) {
+    for (let mem of groupAdminss) {
         if (mem && mem.id) {
             textt += `🤢 ↭ @${mem.id.split("@")[0]}\n`;
             count++;
@@ -47,7 +48,7 @@ async(Void, citel, text,{ isCreator }) => {
     }
     Void.sendMessage(citel.chat, {
         text: textt,
-        mentions: [...groupAdmins, ...participants].map((a) => a.id),
+        mentions: [...groupAdminss, ...participants].map((a) => a.id),
     }, {
         quoted: citel,
     });
