@@ -27,8 +27,11 @@ cmd({
     async(Void, citel, text,{ isCreator }) => {
         if (!citel.isGroup) return citel.reply(tlang().group);
         const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+        if (!groupMetadata) return;
         const participants = citel.isGroup ? await groupMetadata.participants : "";
+        if (!participants) return;
         const groupAdmins = await getAdmin(Void, citel)
+        if (!groupAdmins) return;
         const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
         if (!isAdmins) return citel.reply(tlang().admin);
 
@@ -50,6 +53,7 @@ cmd({
         });
     }
 )
+
 //---------------------------------------------------------------------------
 
 cmd({
