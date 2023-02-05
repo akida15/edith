@@ -2,13 +2,6 @@ const { sck,sck1,cmd, getBuffer, tlang,sleep,getAdmin, prefix } = require('../li
 const Config = require('../config')
 const eco = require('discord-mongoose-economy')
 const ty = eco.connect(mongodb);
-/*
- cmd({
-        pattern: "economy",
-        desc: "daily gold.",
-        category: "economy",
-    },
-    */
     //---------------------------------------------------------------------------
 
 cmd({
@@ -16,9 +9,6 @@ cmd({
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
-        const groupAdmins = await getAdmin(Void, citel)
-        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-        if (!isAdmins) return citel.reply(tlang().admin);
        let zerogroup = (await sck.findOne({
            id: citel.chat,
        })) || (await new sck({
@@ -155,7 +145,6 @@ async(Void, citel, text,{ isCreator }) => {
     const groupAdmins = await getAdmin(Void, citel)
         const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
         if (!isAdmins) return citel.reply(tlang().admin);
-       if(!isCreator) return
 
         const secktor = "secktor"
         let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
