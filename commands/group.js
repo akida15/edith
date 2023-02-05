@@ -17,9 +17,11 @@ const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
 
+//---------------------------------------------------------------------------
+
 
 cmd({
-        pattern: "منشن",
+        pattern: "tag",
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
