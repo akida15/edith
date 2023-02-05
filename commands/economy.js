@@ -130,12 +130,12 @@ async(Void, citel, text,{ isCreator }) => {
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
-        const groupAdmins = await getAdmin(Void, citel)
-        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-        if (!isAdmins) return citel.reply(tlang().admin);
         if(!isCreator) return
 
          const secktor = "secktor"
+         const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
          let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
          if(!users) return citel.reply('منشن من تبغى تضيف له/م')
          users.forEach(async (user) => {
