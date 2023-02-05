@@ -34,29 +34,29 @@ cmd({
 )
    //---------------------------------------------------------------------------
     //---------------------------------------------------------------------------
-    cmd({
-       pattern: "ترتيب_البيلي",
-       filename: __filename,
-   },
-   async(Void, citel, text,{ isCreator }) => {
-   let h = await eco.lb('secktor',10);
-   let str = ``
-   const { sck1 } = require('../lib');
-   let arr = []
-    for(let i=0;i<h.length;i++){
-           let username = await sck1.findOne({ id: h[i].userID })
-           var tname;
-           if (username.name && username.name !== undefined) {
-               tname = username.name
-           } else {
-               tname = Void.getName(h[i].userID)
-           }
-str+= `*⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n\n*${i+1}*\n\n`  	 
-    arr.push(h[i].userID)
-    }
-        citel.reply(str,{mentions:arr})
-        
-    })
+  cmd({
+   pattern: "ترتيب_البيلي",
+   filename: __filename,
+},
+async(Void, citel, text,{ isCreator }) => {
+let h = await eco.lb('secktor',10);
+let str = ``
+const { sck1 } = require('../lib');
+let arr = []
+for(let i=0;i<h.length;i++){
+       let username = await sck1.findOne({ id: h[i].userID })
+       var tname;
+       if (username.name && username.name !== undefined) {
+           tname = username.name
+       } else {
+           tname = Void.getName(h[i].userID)
+       }
+str+= `\n\n\n *${i+1}.*\n\n *⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}`  	 
+arr.push(h[i].userID)
+}
+    citel.reply(str,{mentions:arr})
+     
+})
 
 cmd({
    pattern: "تحويل",
