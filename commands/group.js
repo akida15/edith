@@ -17,6 +17,39 @@ const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
 
+
+cmd({
+        pattern: "منشن",
+        filename: __filename,
+    },
+    async(Void, citel, text,{ isCreator }) => {
+        if (!citel.isGroup) return citel.reply(tlang().group);
+        const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+        const participants = citel.isGroup ? await groupMetadata.participants : "";
+        const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
+
+        let textt = `${text ? text : "السلام عليكم"}\n`
+        let count = 1;
+        for (let mem of groupAdmins) {
+            textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
+            count++;
+        }
+        for (let mem of participants) {
+            textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
+            count++;
+        }
+        Void.sendMessage(citel.chat, {
+            text: textt,
+            mentions: [...groupAdmins, ...participants].map((a) => a.id),
+        }, {
+            quoted: citel,
+        });
+    }
+)
+//---------------------------------------------------------------------------
+
 cmd({
             pattern: "ادخل",
             desc: "",
