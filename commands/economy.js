@@ -111,8 +111,8 @@ async(Void, citel, text,{ isCreator }) => {
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
          return await citel.reply(`╮──────✧ا✧───────╭
-         │ ✯---- ${balance.wallet} بيلي ----⦿
-         ╯──────✧ا✧───────╰`)
+│ ✯---- ${balance.wallet} بيلي ----⦿
+╯──────✧ا✧───────╰`)
      
      }
      )
