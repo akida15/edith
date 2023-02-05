@@ -40,7 +40,7 @@ cmd({
    },
    async(Void, citel, text,{ isCreator }) => {
    let h = await eco.lb('secktor',10);
-   let str = `*Top ${h.length} users with more money in wallet.*\n`
+   let str = ``
    const { sck1 } = require('../lib');
    let arr = []
     for(let i=0;i<h.length;i++){
@@ -51,7 +51,7 @@ cmd({
            } else {
                tname = Void.getName(h[i].userID)
            }
-str+= `*${i+1}*\n\n *⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n\n`  	 
+str+= `*⧉ - الاسم:* ${tname}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n\n*${i+1}*\n\n`  	 
     arr.push(h[i].userID)
     }
         citel.reply(str,{mentions:arr})
