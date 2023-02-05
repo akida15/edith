@@ -16,6 +16,9 @@ cmd({
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
+        const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
        let zerogroup = (await sck.findOne({
            id: citel.chat,
        })) || (await new sck({
@@ -25,7 +28,6 @@ cmd({
        let mongoschemas = zerogroup.economy || "false";
        if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
     if(!isCreator) return citel.reply(tlang().owner)
-    const groupAdmins = await getAdmin(Void, citel)
        let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
    if(!users) return citel.reply('منشن احد')
        const balance  = await eco.balance(users, "secktor")
@@ -40,10 +42,12 @@ cmd({
        filename: __filename,
    },
    async(Void, citel, text,{ isCreator }) => {
+    const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
    let h = await eco.lb('secktor',10);
    let str = ``
    const { sck1 } = require('../lib');
-   const groupAdmins = await getAdmin(Void, citel)
    let arr = []
     for(let i=0;i<h.length;i++){
            let username = await sck1.findOne({ id: h[i].userID })
@@ -126,10 +130,12 @@ async(Void, citel, text,{ isCreator }) => {
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
+        const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
         if(!isCreator) return
 
          const secktor = "secktor"
-         const groupAdmins = await getAdmin(Void, citel)
          let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
          if(!users) return citel.reply('منشن من تبغى تضيف له/م')
          users.forEach(async (user) => {
@@ -147,10 +153,12 @@ async(Void, citel, text,{ isCreator }) => {
        react: "👍"
    },
    async(Void, citel, text,{ isCreator }) => {
+    const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
        if(!isCreator) return
 
         const secktor = "secktor"
-        const groupAdmins = await getAdmin(Void, citel)
         let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
 if(!users) return citel.reply('منشن مين تبغى تجرد منه/م')
 for (const user of users) {
