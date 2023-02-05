@@ -1,4 +1,4 @@
-const { sck,sck1,cmd, getBuffer, tlang, prefix } = require('../lib')
+const { sck,sck1,cmd, getBuffer, tlang,sleep,getAdmin, prefix } = require('../lib')
 const Config = require('../config')
 const eco = require('discord-mongoose-economy')
 const ty = eco.connect(mongodb);
