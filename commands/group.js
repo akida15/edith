@@ -18,30 +18,26 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
-cmd({
+    cmd({
         pattern: "tag",
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
         if (!citel.isGroup) return citel.reply(tlang().group);
         const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
-        if (!groupMetadata) return;
         const participants = citel.isGroup ? await groupMetadata.participants : "";
-        if (!participants) return;
         const groupAdmins = await getAdmin(Void, citel)
-        if (!groupAdmins) return;
         const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
         if (!isAdmins) return citel.reply(tlang().admin);
 
         let textt = `${text ? text : "السلام عليكم"}\n`
         let count = 1;
-        for (let mem of groupAdmins) {
-            if (!mem.id) continue;
+        for (let mem of participants) {
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
-        for (let mem of participants) {
-            if (!mem.id) continue;
+
+        for (let mem of groupAdmins) {
             textt += `${count} ↭ @${mem.id.split("@")[0]}\n`;
             count++;
         }
