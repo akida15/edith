@@ -130,7 +130,6 @@ async(Void, citel, text,{ isCreator }) => {
         filename: __filename,
     },
     async(Void, citel, text,{ isCreator }) => {
-        if(!isCreator) return
 
          const secktor = "secktor"
          const groupAdmins = await getAdmin(Void, citel)
