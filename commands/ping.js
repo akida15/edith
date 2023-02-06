@@ -3,7 +3,7 @@ const axios = require('axios')
 const speed = require('performance-now')
 //---------------------------------------------------------------------------
 cmd({
-        pattern: "chat",
+        pattern: "chat1",
         filename: __filename,
     },
     async(Void, citel,text) => {
