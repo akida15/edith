@@ -31,28 +31,28 @@ cmd({
    pattern: "ترتيب_البيلي",
    filename: __filename,
 },
-async(Void, citel, text,{ isCreator }) => {
-  const groupAdmins = await getAdmin(Void, citel)
-  const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-  if (!isAdmins) return citel.reply(tlang().admin);
-  let h = await eco.lb('secktor',10);
-  let str = ``
-  const { sck1 } = require('../lib');
-  let arr = []
-  for(let i=0;i<h.length;i++){
-    let username = await sck1.findOne({ id: h[i].userID })
-    var tname;
-    if (username && username !== undefined) {
-      tname = username.name
-    } else {
-      tname = Void.getName(h[i].userID)
-    }
-    str += `\n *⧉ - الاسم:* ${h[i].userID}\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* @${h[i].userID.split('@')[0]}\n`
-    arr.push(h[i].userID)
-  }
-  citel.reply(str, { mentions: arr })
-})
+async (Void, citel, text, { isCreator }) => {
+   const groupAdmins = await getAdmin(Void, citel)
+   const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+   if (!isAdmins) return citel.reply(tlang().admin);
 
+   let h = await eco.lb('secktor', 10);
+   let str = ``
+   const { sck1 } = require('../lib');
+   let arr = []
+   for (let i = 0; i < h.length; i++) {
+      let username = await sck1.findOne({ id: h[i].userID })
+      var tname;
+      if (username && username !== undefined) {
+         tname = username.name
+      } else {
+         tname = Void.getName(h[i].userID)
+      }
+      str += `\n *⧉ - الاسم:* @${h[i].userID.split('@')[0]} (${tname})\n *⧉ - البيلي:* ${h[i].wallet}\n *⧉ - الرقم:* ${h[i].userID}\n`
+      arr.push(h[i].userID)
+   }
+   citel.reply(str, { mentions: arr })
+});
 
 
 cmd({
