@@ -47,7 +47,7 @@ cmd({
            } else {
                tname = Void.getName(h[i].userID)
            }
-str+= `ـ*${i+1}*\n╮─────────────ـ\n│*⧉ - البيلي:* ${h[i].wallet}\n│ـ\n│ *⧉ - الرقم:* wa.me/${h[i].userID.split('@')[0]}\n╯─────────────ـ\n\n`
+str+= `ـ*${i+1}* \n╮─────────────ـ\n│ *⧉ - البيلي:*  ${h[i].wallet}\n│ـ\n│ *⧉ - الرقم:* wa.me/${h[i].userID.split('@')[0]}\n╯─────────────ـ\n\n`
     arr.push(h[i].userID)
     }
         citel.reply(str,{mentions:arr})
