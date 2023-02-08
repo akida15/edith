@@ -28,9 +28,9 @@ async(Void, citel, text) => {
 يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
 
     try {
-        ppuser = 'https://i.imgur.io/meA2g0G_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
+        ppuser = await Void.profilePictureUrl(citel.sender, "image");
     } catch {
-        ppuser = 'https://i.imgur.io/meA2g0G_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
+        ppuser = 'https://i.imgur.io/Qxh96zE_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
     }
 
         const randomHexs = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
