@@ -62,7 +62,7 @@ async(Void, citel, text) => {
         .setBackground("IMAGE", randomImageLink)
         .setRank(0, role, false)
         .setUsername("Jiraya")
-        .setDiscriminator("مون");
+        .setDiscriminator(disc);
     rank.build()
         .then(async(data) => {
             Void.sendMessage(citel.chat, {
