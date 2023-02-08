@@ -1,15 +1,26 @@
- const { sck, sck1,cmd, jsonformat, botpic, TelegraPh, RandomXP, Config, tlang, warndb, sleep,getAdmin,getBuffer, prefix } = require('../lib')
- const moment = require("moment-timezone");
- const fs = require('fs-extra')
- const Levels = require("discord-xp");
- const canvacord = require("canvacord");
- const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
- //---------------------------------------------------------------------------
- cmd({
+/**
+ Copyright (C) 2022.
+ Licensed under the  GPL-3.0 License;
+ You may not use this file except in compliance with the License.
+ It is supplied in the hope that it may be useful.
+ * @project_name : Secktor-Md
+ * @author : SamPandey001 <https://github.com/SamPandey001>
+ * @description : Secktor,A Multi-functional whatsapp bot.
+ * @version 0.0.6
+ **/
+
+const { sck, sck1,cmd, jsonformat, botpic, TelegraPh, RandomXP, Config, tlang, warndb, sleep,getAdmin, prefix } = require('../lib')
+const moment = require("moment-timezone");
+const fs = require('fs-extra')
+const Levels = require("discord-xp");
+const canvacord = require("canvacord");
+//---------------------------------------------------------------------------
+
+    //---------------------------------------------------------------------------
+cmd({
             pattern: "rank",
             desc: "Sends rank card of user.",
             category: "group",
-            filename: __filename,
         },
         async(Void, citel, text) => {
             const userq = await Levels.fetch(citel.sender, "RandomXP");
@@ -76,11 +87,29 @@
             } catch {
                 ppuser = THUMB_IMAGE;
             }
+            const rank = new canvacord.Rank()
+                .setAvatar(ppuser)
+                .setLevel(userq.level)
+                .setLevelColor("#ffa200", "#ffa200")
+                .setCurrentXP(userq.xp)
+                .setStatus("online")
+                .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
+                .setOverlay("#ffffff", 100, false)
+                .setRequiredXP(Levels.xpFor(userq.level + 1))
+                .setProgressBar("#ffa200", "COLOR")
+                .setRank(0, role, false)
+                .setBackground("COLOR", "#000000")
+                .setUsername("Rank Check!")
+                .setDiscriminator(disc);
+            rank.build()
+                .then(async(data) => {
                     Void.sendMessage(citel.chat, {
-                        image: await getBuffer(ppuser),
+                        image: data,
                         caption: textr,
                     }, {
                         quoted: citel,
                     });
+                });
         }
     )
+    //---------------------------------------------------------------------------
