@@ -122,12 +122,11 @@ cmd({
                 .setLevelColor(randomHex, randomHex)
                 .setCurrentXP(34)
                 .setStatus("online")
-                .setBackground("IMAGE", randomImageLink)
                 .setOverlay(randomHex, 100, false)
                 .setRequiredXP(100)
                 .setProgressBar(randomHexs, "COLOR")
                 .setRank(0, role, false)
-                .setBackground("COLOR", "#000000")
+                .setBackground("IMAGE", randomImageLink)
                 .setUsername("jeje")
                 .setDiscriminator(disc);
             rank.build()
