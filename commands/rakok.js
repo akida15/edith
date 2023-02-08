@@ -102,13 +102,27 @@ cmd({
             const randomHexs = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
         const randomHex = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
 
+        const imageLinks = [
+            "https://i.ibb.co/XSWV1kx/1.jpg",
+            "https://i.ibb.co/CPmZrVR/2.jpg",
+            "https://i.ibb.co/NLb7bG2/3.jpg",
+            "https://i.ibb.co/3mrhcv5/4.jpg",
+            "https://i.ibb.co/WPnprpL/5.jpg",
+            "https://i.ibb.co/12xNXhM/6.jpg",
+            "https://i.ibb.co/rFRcS6m/7.jpg",
+            "https://i.ibb.co/PcBK1cp/8.jpg",
+            "https://i.ibb.co/brfCPKB/9.jpg",
+          ];
+          const randomImageLink = imageLinks[Math.floor(Math.random() * imageLinks.length)];
+
+
             const rank = new canvacord.Rank()
                 .setAvatar(ppuser)
                 .setLevel(32)
                 .setLevelColor(randomHex, randomHex)
                 .setCurrentXP(34)
                 .setStatus("online")
-                .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
+                .setBackground("IMAGE", randomImageLink)
                 .setOverlay(randomHex, 100, false)
                 .setRequiredXP(100)
                 .setProgressBar(randomHexs, "COLOR")
