@@ -28,9 +28,9 @@ async(Void, citel, text) => {
 يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
 
     try {
-        ppuser = 'https://i.ibb.co/jMwhNS2/th.jpg';
+        ppuser = 'https://i.imgur.io/meA2g0G_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
     } catch {
-        ppuser = 'https://i.ibb.co/qNt1Hfx/Whats-App-Image-2023-01-29-at-17-00-05.jpg';
+        ppuser = 'https://i.imgur.io/meA2g0G_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
     }
 
         const randomHexs = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
@@ -59,7 +59,7 @@ async(Void, citel, text) => {
         .setOverlay(randomHex, 100, false)
         .setRequiredXP(100)
         .setProgressBar(randomHexs, "COLOR")
-        .setBackground("COLOR", "#000000")
+        .setBackground("IMAGE", randomImageLink)
         .setRank(0, role, false)
         .setUsername("Jiraya")
         .setDiscriminator(disc);
