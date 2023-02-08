@@ -59,6 +59,7 @@ async(Void, citel, text) => {
         .setOverlay(randomHex, 100, false)
         .setRequiredXP(100)
         .setProgressBar(randomHexs, "COLOR")
+        .setBackground("COLOR", "#000000")
         .setRank(0, role, false)
         .setUsername("Jiraya")
         .setDiscriminator(disc);
