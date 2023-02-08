@@ -77,11 +77,22 @@ cmd({
             }
             let disc = citel.sender.substring(3, 7);
             let textr = '';
-            textr += `*Hii ${tlang().greet} ,🌟 ${citel.pushName}∆${disc}'s* Exp\n\n`;
-            let ttms = `${userq.xp}` / 8;
-            textr += `*🌟Role*: ${role}\n*🟢Exp*: ${userq.xp} / ${Levels.xpFor(
-    userq.level + 1
-  )}\n*🏡Level*: ${userq.level}\n*Total Messages:*- ${ttms}`;
+            textr += `h`;
+             textr += `
+⧉ اللقب : جيرايا
+
+⧉ المنصب : مؤسس
+
+⧉ عدد مسابقات : 56 
+
+⧉ الفوز : 10
+
+⧉ البنك : 627k 
+
+⧉ رابط : wa.me/+34612538080
+
+يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
+
             try {
                 ppuser = await Void.profilePictureUrl(citel.sender, "image");
             } catch {
@@ -89,13 +100,13 @@ cmd({
             }
             const rank = new canvacord.Rank()
                 .setAvatar(ppuser)
-                .setLevel(userq.level)
+                .setLevel(32)
                 .setLevelColor("#ffa200", "#ffa200")
-                .setCurrentXP(userq.xp)
+                .setCurrentXP(34)
                 .setStatus("online")
                 .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
                 .setOverlay("#ffffff", 100, false)
-                .setRequiredXP(Levels.xpFor(userq.level + 1))
+                .setRequiredXP(100)
                 .setProgressBar("#ffa200", "COLOR")
                 .setRank(0, role, false)
                 .setBackground("COLOR", "#000000")
