@@ -22,56 +22,6 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 
 //---------------------------------------------------------------------------
 
- cmd({
-    pattern: "جيرايا",
-},
-async(Void, citel, text) => {
-    let disc = citel.sender.substring(3, 7);
-    var role = 'جيرايا'
-    let textr = '';
-    textr += `
-⧉ اللقب : جيرايا
-
-⧉ المنصب : مؤسس
-
-⧉ عدد مسابقات : 56 
-
-⧉ الفوز : 10
-
-⧉ البنك : 627k 
-
-⧉ رابط : wa.me/+34612538080
-
-يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
-           try {
-    ppuser = await Void.profilePictureUrl(citel.sender, "image");
-} catch {
-    ppuser = picsecktor;
-}
-const rank = new canvacord.Rank()
-    .setAvatar(ppuser)
-    .setLevel(10)
-    .setLevelColor("#ffa200", "#ffa200")
-    .setCurrentXP(50)
-    .setStatus("online")
-    .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
-    .setOverlay("#ffffff", 100, false)
-    .setRequiredXP(10)
-    .setProgressBar("#ffa200", "COLOR")
-    .setRank(0, role, false)
-    .setBackground("COLOR", "#000000")
-    .setUsername("Rank Check!")
-    .setDiscriminator(disc);
-rank.build()
-    .then(async (data) => {
-        Void.sendMessage(citel.chat, {
-            image: data,
-            caption: textr,
-        }, {
-            quoted: citel,
-        });
-    });
-
 cmd({
             pattern: "ادخل",
             desc: "",
