@@ -85,7 +85,15 @@ async(Void, citel, text,{ isCreator }) => {
 
        const deduct = await eco.deduct(user1, secktor, value[0]);
        const give = await eco.give(user2, secktor, value[0]);
-       return await citel.reply(`*تم تحويل ${value[0]} من حسابك*`)
+       return await citel.reply(`⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹
+↫ ⟦ بـنـك مـون 🏦 ⟧
+
+֎ ╎تـم تـحـويـل  ${value[0]}  مـن حـسـابـك
+
+֎ ╎رصـيـدك 💰 ⟦ ${balance.wallet} بيلي ⟧
+
+⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹`)
+
 
 }
 )
@@ -107,11 +115,11 @@ async(Void, citel, text,{ isCreator }) => {
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
          return await citel.reply(`⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹
-         ↫ ⟦ بـنـك مـون 🏦 ⟧
+↫ ⟦ بـنـك مـون 🏦 ⟧
              
-         ֎ ╎رصـيـدك 💰 ⟦ ${balance.wallet} بيلي ⟧
+֎ ╎رصـيـدك 💰 ⟦ ${balance.wallet} بيلي ⟧
              
-         ⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹`)
+⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹`)
      
      }
      )
