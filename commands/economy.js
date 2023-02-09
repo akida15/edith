@@ -130,7 +130,11 @@ async(Void, citel, text,{ isCreator }) => {
          users.forEach(async (user) => {
            await eco.give(user, secktor, parseInt(text.split(' ')[0]));
          });
-        return await Void.sendMessage(citel.chat,{text: `تم ضفت ${parseInt(text.split(' ')[0])} ل @${users.split('@')[0]} `,mentions:users},{quoted:citel})
+       return await Void.sendMessage(citel.chat, {
+  text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} عضو/أعضاء`,
+  mentions: users.map((user) => `@${user.split('@')[0]}`)
+}, { quoted: citel });
+
     }
 )
 
