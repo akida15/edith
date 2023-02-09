@@ -47,7 +47,7 @@ cmd({
            } else {
                tname = Void.getName(h[i].userID)
            }
-str+= `ـ*${i+1}* \n╮─────────────ـ\n│ *⧉ - البيلي:*  ${h[i].wallet}\n│ـ\n│ *⧉ - الرقم:* wa.me/${h[i].userID.split('@')[0]}\n╯─────────────ـ\n\n`
+str+= `ـ *${i+1}* \n╮─────────────ـ\n│ *⧉ - البيلي:*  ${h[i].wallet}\n│ـ\n│ *⧉ - الرقم:* wa.me/${h[i].userID.split('@')[0]}\n╯─────────────ـ\n\n`
     arr.push(h[i].userID)
     }
         citel.reply(str,{mentions:arr})
@@ -130,7 +130,7 @@ async(Void, citel, text,{ isCreator }) => {
          users.forEach(async (user) => {
            await eco.give(user, secktor, parseInt(text.split(' ')[0]));
          });
-       return await Void.sendMessage(citel.chat, {text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} `, mentions: users}, {quoted: citel})
+        return await Void.sendMessage(citel.chat,{text: `تم ضفت ${parseInt(text.split(' ')[0])} ل @${users.split('@')[0]} `,mentions:users},{quoted:citel})
     }
 )
 
