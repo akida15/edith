@@ -106,9 +106,12 @@ async(Void, citel, text,{ isCreator }) => {
         if (mongoschemas == "false") return citel.reply("لم يتم تشغيل البنك فالمجموعة");
          const secktor = "secktor"
          const balance = await eco.balance(citel.sender, secktor); //Returns wallet, bank, and bankCapacity. Also creates a USer if it doesn't exist.
-         return await citel.reply(`╮──────✧ا✧───────╭
-│ ⦿ - ${balance.wallet} بيلي 
-╯──────✧ا✧───────╰`)
+         return await citel.reply(`⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹
+         ↫ ⟦ بـنـك مـون 🏦 ⟧
+             
+         ֎ ╎رصـيـدك 💰 ⟦ ${balance.wallet} بيلي ⟧
+             
+         ⊹⊱≼━━━⌬〔🌑〕⌬━━━≽⊰⊹`)
      
      }
      )
@@ -130,11 +133,7 @@ async(Void, citel, text,{ isCreator }) => {
          users.forEach(async (user) => {
            await eco.give(user, secktor, parseInt(text.split(' ')[0]));
          });
-       return await Void.sendMessage(citel.chat, {
-  text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} عضو/أعضاء`,
-  mentions: users.map((user) => `@${user.split('@')[0]}`)
-}, { quoted: citel });
-
+        return await Void.sendMessage(citel.chat,{text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} `,mentions:users},{quoted:citel})
     }
 )
 
