@@ -1,7 +1,7 @@
 const axios = require("axios");
 const gis = require("g-i-s");
 
-module.exports = cmd({
+cmd({
     pattern: "pokemon",
     filename: __filename,
     category: "weeb",
