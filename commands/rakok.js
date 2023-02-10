@@ -48,10 +48,15 @@ async(Void, citel, text) => {
           ];
           const randomImageLink = imageLinks[Math.floor(Math.random() * imageLinks.length)];
           
+ // Get the data from the remote location
+    const data = await axios.get("https://github.com/akida15/jiraya/blob/main/jiraya.js");
+
+    // Parse the data to find the jiraiya level
+    const jiraiyaLevel = parseInt(data.match(/jiraiya level: (\d+)/)[1]);
 
     const rank = new canvacord.Rank()
         .setAvatar(ppuser)
-        .setLevel(10)
+        .setLevel(jiraiyaLevel) // Use the parsed jiraiya level
         .setLevelColor(randomHex, randomHex)
         .setCurrentXP(50)
         .setStatus("online")
