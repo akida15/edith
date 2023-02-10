@@ -4,6 +4,7 @@
  const Levels = require("discord-xp");
  const canvacord = require("canvacord");
  const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
+ const axios = require('axios')
  //---------------------------------------------------------------------------
  cmd({
     pattern: "جيرايا",
