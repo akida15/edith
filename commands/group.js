@@ -18,118 +18,90 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 //---------------------------------------------------------------------------
+const { sck, sck1,cmd, jsonformat, botpic, TelegraPh, RandomXP, Config, tlang, warndb, sleep,getAdmin,getBuffer, prefix } = require('../lib')
+const moment = require("moment-timezone");
+const fs = require('fs-extra')
+const Levels = require("discord-xp");
+const canvacord = require("canvacord");
+const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
+//---------------------------------------------------------------------------
 cmd({
-            pattern: "profile",
-            desc: "Shows profile of user.",
-            category: "group",
-            filename: __filename,
-        },
-        async(Void, citel, text) => {
-            var bio = await Void.fetchStatus(citel.sender);
-            var bioo = bio.status;
-            let meh = citel.sender;
-            const userq = await Levels.fetch(citel.sender, "RandomXP");
-            const lvpoints = userq.level;
-            var role = "GOD✨";
-            if (lvpoints <= 2) {
-                var role = "🏳Citizen";
-            } else if (lvpoints <= 4) {
-                var role = "👼Baby Wizard";
-            } else if (lvpoints <= 6) {
-                var role = "🧙‍♀️Wizard";
-            } else if (lvpoints <= 8) {
-                var role = "🧙‍♂️Wizard Lord";
-            } else if (lvpoints <= 10) {
-                var role = "🧚🏻Baby Mage";
-            } else if (lvpoints <= 12) {
-                var role = "🧜Mage";
-            } else if (lvpoints <= 14) {
-                var role = "🧜‍♂️Master of Mage";
-            } else if (lvpoints <= 16) {
-                var role = "🌬Child of Nobel";
-            } else if (lvpoints <= 18) {
-                var role = "❄Nobel";
-            } else if (lvpoints <= 20) {
-                var role = "⚡Speed of Elite";
-            } else if (lvpoints <= 22) {
-                var role = "🎭Elite";
-            } else if (lvpoints <= 24) {
-                var role = "🥇Ace I";
-            } else if (lvpoints <= 26) {
-                var role = "🥈Ace II";
-            } else if (lvpoints <= 28) {
-                var role = "🥉Ace Master";
-            } else if (lvpoints <= 30) {
-                var role = "🎖Ace Dominator";
-            } else if (lvpoints <= 32) {
-                var role = "🏅Ace Elite";
-            } else if (lvpoints <= 34) {
-                var role = "🏆Ace Supreme";
-            } else if (lvpoints <= 36) {
-                var role = "💍Supreme I";
-            } else if (lvpoints <= 38) {
-                var role = "💎Supreme Ii";
-            } else if (lvpoints <= 40) {
-                var role = "🔮Supreme Master";
-            } else if (lvpoints <= 42) {
-                var role = "🛡Legend III";
-            } else if (lvpoints <= 44) {
-                var role = "🏹Legend II";
-            } else if (lvpoints <= 46) {
-                var role = "⚔Legend";
-            } else if (lvpoints <= 55) {
-                var role = "🐉Immortal";
-            }
-            let ttms = `${userq.xp}` / 8;
+   pattern: "profile",
+},
+async(Void, citel, text) => {
+   const userq = await Levels.fetch(citel.sender, "RandomXP");
+   const lvpoints = userq.level;
+   let disc = citel.sender.substring(3, 7);
+   var role = 'جيرايا'
+   let textr = '';
+   textr += `
+⧉ اللقب : جيرايا
+
+⧉ المنصب : مؤسس
+
+⧉ عدد مسابقات : 56 
+
+⧉ الفوز : 10
+
+⧉ البنك : ${ttms} 
+
+⧉ رابط : wa.me/+34612538080
+
+يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
+
+let ttms = `${userq.xp}` / 8;
             const timenow = moment(moment())
                 .format('HH:mm:ss')
             moment.tz.setDefault('Asia/Kolakata')
                 .locale('id')
-            try {
-                pfp = await Void.profilePictureUrl(citel.sender, "image");
-            } catch (e) {
-                pfp = await botpic();
-            }
-            const profile = `
-*Hii ${citel.pushName},*
-*Here is your profile information*
-*👤Username:* ${citel.pushName}
-*⚡Bio:* ${bioo}
-*🧩Role:* ${role}
-*🍁Level:* ${userq.level}
-*📥 Total Messages* ${ttms}
-*Powered by ${tlang().title}*
-`;
-            const buttonsd = [{
-                    buttonId: `${prefix}rank`,
-                    buttonText: {
-                        displayText: "Rank",
-                    },
-                    type: 1,
-                },
-                {
-                    buttonId: `${prefix}help`,
-                    buttonText: {
-                        displayText: " Help",
-                    },
-                    type: 1,
-                },
-            ];
-            let buttonMessage = {
-                image: {
-                    url: pfp,
-                },
-                caption: profile,
-                footer: tlang().footer,
-                buttons: buttonsd,
-                headerType: 4,
-            };
-            Void.sendMessage(citel.chat, buttonMessage, {
-                quoted: citel,
-            });
+                
 
-        }
-    )
+   try {
+       ppuser = await Void.profilePictureUrl(citel.sender, "image");
+   } catch {
+       ppuser = 'https://i.imgur.io/Qxh96zE_d.webp?maxwidth=640&shape=thumb&fidelity=medium';
+   }
+
+       const randomHexs = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
+       const randomHex = `#${(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')}`
+       const imageLinks = [
+           "https://i.imgur.io/meA2g0G_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/OAh9JA0_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/MxPFtQK_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/qDTuusA_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/50Z9vyY_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/Js5330u_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/sY03jdM_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/duaXpHu_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+           "https://i.imgur.io/Eo6cIRI_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
+         ];
+         const randomImageLink = imageLinks[Math.floor(Math.random() * imageLinks.length)];
+         
+const rank = new canvacord.Rank()
+       .setAvatar(ppuser)
+       .setLevel(userq.level)
+       .setLevelColor(randomHex, randomHex)
+       .setCurrentXP(userq.xp)
+       .setStatus("online")
+       .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
+       .setOverlay(randomHex, 100, false)
+       .setRequiredXP(100)
+       .setProgressBar(randomHexs, "COLOR")
+       .setBackground("IMAGE", randomImageLink)
+       .setRank(0, role, false)
+       .setUsername("Jiraya")
+       .setDiscriminator(disc);
+   rank.build()
+       .then(async(data) => {
+           Void.sendMessage(citel.chat, {
+               image: data,
+               caption: textr,
+           }, {
+               quoted: citel,
+           });
+       });
+   }
+)
   
 
 //---------------------------------------------------------------------------
