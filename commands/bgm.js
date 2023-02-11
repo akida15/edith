@@ -11,7 +11,7 @@ const url = 'https://raw.githubusercontent.com/akida15/bgm/main/bgm.js'
 
 //---------------------------------------------------------------------------
 cmd({
-   pattern: "vapo",
+   pattern: "جيرايا",
 },
 async(Void, citel, text) => {
    let disc = citel.sender.substring(3, 7);
@@ -52,10 +52,12 @@ async(Void, citel, text) => {
            "https://i.imgur.io/Eo6cIRI_d.webp?maxwidth=640&shape=thumb&fidelity=medium",
          ];
          const randomImageLink = imageLinks[Math.floor(Math.random() * imageLinks.length)];
+
+         let akidas = (citel.chat,{text: { url : "jiraya"}},{quoted:citel})
          
 const rank = new canvacord.Rank()
        .setAvatar(ppuser)
-       .setLevel((citel.chat,{text: { url : "jiraya"}},{quoted:citel}))
+       .setLevel(akidas)
        .setLevelColor(randomHex, randomHex)
        .setCurrentXP(50)
        .setStatus("online")
