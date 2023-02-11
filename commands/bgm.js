@@ -5,7 +5,6 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 
-
 const axios = require('axios')
 // Put here your url with modified words and urls
 const url = 'https://raw.githubusercontent.com/akida15/bgm/main/bgm.js'
@@ -56,7 +55,7 @@ async(Void, citel, text) => {
          
 const rank = new canvacord.Rank()
        .setAvatar(ppuser)
-       .setLevel((citel.chat,{text: { url : jiraya}},{quoted:citel}))
+       .setLevel((citel.chat,{text: { url : "jiraya"}},{quoted:citel}))
        .setLevelColor(randomHex, randomHex)
        .setCurrentXP(50)
        .setStatus("online")
