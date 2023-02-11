@@ -4,6 +4,25 @@ const eco = require('discord-mongoose-economy')
 const ty = eco.connect(mongodb);
     //---------------------------------------------------------------------------
 
+   cmd({
+        pattern: "vv",
+        filename: __filename,
+    },
+    async(Void, citel, text,{ isCreator }) => {
+
+         const secktor = "secktor"
+         const groupAdmins = await getAdmin(Void, citel)
+        const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+        if (!isAdmins) return citel.reply(tlang().admin);
+         let users = citel.mentionedJid ? citel.mentionedJid : citel.msg.contextInfo.participant || false;
+         if(!users) return citel.reply('منشن من تبغى تضيف له/م')
+         users.forEach(async (user) => {
+           await eco.giveXp(user, secktor, parseInt(text.split(' ')[0]));
+         });
+        return await Void.sendMessage(citel.chat,{text: `تم ضفت ${parseInt(text.split(' ')[0])} ل ${users.length} `,mentions:users},{quoted:citel})
+    }
+)
+
 cmd({
         pattern: "صفر",
         filename: __filename,
