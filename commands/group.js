@@ -24,6 +24,11 @@ async(Void, citel, text) => {
    const userq = await Levels.fetch(citel.sender, "RandomXP");
    const lvpoints = userq.level;
    let disc = citel.sender.substring(3, 7);
+   let ttms = `${userq.xp}` / 8;
+            const timenow = moment(moment())
+                .format('HH:mm:ss')
+            moment.tz.setDefault('Asia/Kolakata')
+                .locale('id')
    var role = 'جيرايا'
    let textr = '';
    textr += `
@@ -40,12 +45,6 @@ async(Void, citel, text) => {
 ⧉ رابط : wa.me/+34612538080
 
 يتم تجديد البروفايل كل اسبوع وقيمته 1 مليون بيلي`;
-
-let ttms = `${userq.xp}` / 8;
-            const timenow = moment(moment())
-                .format('HH:mm:ss')
-            moment.tz.setDefault('Asia/Kolakata')
-                .locale('id')
                 
 
    try {
