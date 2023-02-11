@@ -49,7 +49,7 @@
              teks1 = `\n\n*User* : @${
      citel.sender.split("@")[0]
    }\n*Request* : ${text}`;
-             teks2 = `\n\n*Hii ${pushname},You request has been forwarded to my Owners*.\n*Please wait.......*`;
+             teks2 = `\n\n*Hii ,You request has been forwarded to my Owners*.\n*Please wait.......*`;
              for (let i of owner) {
                  Void.sendMessage(i + "@s.whatsapp.net", {
                      text: textt + teks1,
