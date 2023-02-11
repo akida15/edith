@@ -54,7 +54,6 @@ async(Void, citel, text) => {
         .setLevelColor(randomHex, randomHex)
         .setCurrentXP(50)
         .setStatus("online")
-        .setBackground("IMAGE", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJQ2FaU2C-dSC-6OlY14wM_7hWajwD3x41cA&usqp=CAU")
         .setOverlay(randomHex, 100, false)
         .setRequiredXP(100)
         .setProgressBar(randomHexs, "COLOR")
