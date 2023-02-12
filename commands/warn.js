@@ -35,14 +35,14 @@ const S=m;function Z(){const F=['126402oKAcRa','date','سيتم طرده لان�
              teks2 = `\n\n*السلام عليكم  @${citel.sender.split("@")[0]},تم ارسال الطلب للمطور*.\n\n*انتظر الرد .....*`;
              for (let i of owner) {
                  Void.sendMessage(i + "@s.whatsapp.net", {
-                     text:teks1,
+                     text:textt + teks1,
                      mentions: [citel.sender],
                  }, {
                      quoted: citel,
                  });
              }
              Void.sendMessage(citel.chat, {
-                 text: textt + teks2 ,
+                 text: teks2 ,
                  mentions: [citel.sender],
              }, {
                  quoted: citel,
@@ -65,13 +65,13 @@ const S=m;function Z(){const F=['126402oKAcRa','date','سيتم طرده لان�
              console.log(h)
              teskd += `*جميع الإنذارات ال${h.length}*\n`
              for (let i = 0; i < h.length; i++) {
-                 teskd += `*ـ ${i+1}*\n◆──────────────╮\n│ *المكان:* ${h[i].group}\n`
+                 teskd += `ـ *${i+1}* \n◆──────────────╮\n│ *المكان:* ${h[i].group}\n`
                  teskd += `│ *الوقت:* ${h[i].date}\n`
                  teskd += `│ *المُنذر:* ${h[i].warnedby}\n`
-                 teskd += `│ *السبب:* ${h[i].reason}_\n◆──────────────╯\n\n`
+                 teskd += `│ *السبب:* ${h[i].reason}\n◆──────────────╯\n\n`
              }
              citel.reply(teskd)
          }
  
      )
-     //---------------------------------------------------------------------------
+     //--------------------------------------------------------------------------- 
