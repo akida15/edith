@@ -111,7 +111,7 @@ cmd({
 
 //---------------------------------------------------------------------------
 
-{
+cmd({
   pattern: "منشن",
   filename: __filename,
 },
@@ -165,7 +165,7 @@ async(Void, citel, text, { isCreator }) => {
   }, {
     quoted: citel,
   });
-}
+})
 
   
   
