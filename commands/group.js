@@ -116,19 +116,17 @@ cmd({
     
   
     if (admins.length > 0) {
-textt += "المشرفين 🥇:\n\n"
       let count = 1;
       for (let admin of admins) {
-        textt += `ـ${count} ↭ @${admin.split("@")[0]}\n`;
+        textt += `ـ ${count} 🥇 @${admin.split("@")[0]}\n`;
         count++;
       }
     }
   
     if (members.length > 0) {
-textt += "\nالأعضاء 🥈:\n\n"
       let count = 1;
       for (let member of members) {
-        textt += `ـ${count} ↭ @${member.split("@")[0]}\n`;
+        textt += `ـ ${count} 🥈 @${member.split("@")[0]}\n`;
         count++;
       }
     }
@@ -136,7 +134,7 @@ textt += "\nالأعضاء 🥈:\n\n"
     const creator = groupMetadata?.owner || "";
   
     if (creator) {
-textt += `\nالمؤسس 🤴: ـ@${creator.split("@")[0]}\n`;
+textt += `\nالمؤسس 🤴: @${creator.split("@")[0]}\n`;
     }
   
     Void.sendMessage(citel.chat, {
@@ -146,7 +144,6 @@ textt += `\nالمؤسس 🤴: ـ@${creator.split("@")[0]}\n`;
       quoted: citel,
     });
   })
-  
   
 
 
