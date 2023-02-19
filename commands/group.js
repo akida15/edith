@@ -18,6 +18,31 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
+    pattern: "vath",
+    filename: __filename,
+},
+async (Void, citel, text) => {
+    if (!citel.isGroup) return citel.reply(tlang().group);
+    const groupAdmins = await getAdmin(Void, citel)
+    const botNumber = await Void.decodeJid(Void.user.id)
+    const isBotAdmins = citel.isGroup ? groupAdmins.includes(botNumber) : false;
+    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+
+    if (!isAdmins) return citel.reply(tlang().admin);
+    if (!isBotAdmins) return citel.reply(tlang().admin);
+
+    try {
+        let users = citel.mentionedJid[0] ? citel.mentionedJid[0] : citel.quoted ? citel.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+        if (!users) return;
+        await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
+        return citel.reply("_User kicked successfully_");
+    } catch {
+        return citel.reply(tlang().botAdmin);
+    }
+});
+
+
+cmd({
    pattern: "profile",
 },
 async(Void, citel, text) => {
