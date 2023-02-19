@@ -8,6 +8,35 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
+  pattern: "صلوات",
+  fromMe: false,
+  desc: "احصل على أوقات الصلاة لموقع محدد",
+  usage: "/صلوات اليوم [المدينة]",
+  async (Void, message, match) => {
+    try {
+      const city = match[1];
+      const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=EGYPT&method=8`);
+      const data = await response.json();
+      const timings = data.data.timings;
+
+      let prayerTimes = `أوقات الصلاة لـ${city} اليوم:\n\n`;
+      prayerTimes += `الفجر: ${timings.Fajr}\n`;
+      prayerTimes += `الشروق: ${timings.Sunrise}\n`;
+      prayerTimes += `الظهر: ${timings.Dhuhr}\n`;
+      prayerTimes += `العصر: ${timings.Asr}\n`;
+      prayerTimes += `المغرب: ${timings.Maghrib}\n`;
+      prayerTimes += `العشاء: ${timings.Isha}\n`;
+
+      message.reply(prayerTimes);
+    } catch (e) {
+      console.error(e);
+      message.reply("حدث خطأ أثناء جلب أوقات الصلاة");
+    }
+  }
+});
+
+
+cmd({
   pattern: "احصائيات",
   desc: "يعرض احصائيات حول المستخدمين الموجودين في المجموعة",
   usage: "احصائيات",
