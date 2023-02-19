@@ -17,50 +17,52 @@ const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
 
-
-
- cmd({
+cmd({
     pattern: "akida",
     filename: __filename,
-},
-async(Void, citel, text,{ isCreator }) => {
+  },
+  async(Void, citel, text,{ isCreator }) => {
     if (!citel.isGroup) return citel.reply(tlang().group);
     const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
     const participants = citel.isGroup ? await groupMetadata.participants : "";
     const groupAdmins = await getAdmin(Void, citel)
     const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
     if (!isAdmins) return citel.reply(tlang().admin);
-
-    let adminText = "Admins:\n\n";
-    let memberText = "Members:\n\n";
-    let creatorText = "Creator:\n\n";
-    let adminCount = 1;
-    let memberCount = 1;
-    let creatorCount = 1;
-
+  
+    const admins = []
+    const members = []
     for (let mem of participants) {
-        if (groupAdmins.includes(mem.id)) {
-            adminText += `${adminCount} ↭ @${mem.id.split("@")[0]}\n`;
-            adminCount++;
-        } else if (global.owner.includes(mem.id)) {
-            creatorText += `${creatorCount} ↭ @${mem.id.split("@")[0]}\n`;
-            creatorCount++;
-        } else {
-            memberText += `${memberCount} ↭ @${mem.id.split("@")[0]}\n`;
-            memberCount++;
-        }
+      if (groupAdmins.includes(mem.id)) {
+        admins.push(mem.id)
+      } else {
+        members.push(mem.id)
+      }
+    }
+  
+    let textt = ""
+    let count = 1;
+    for (let admin of admins) {
+      textt += `${count} ↭ 🥇 @${admin.split("@")[0]}\n`;
+      count++;
+    }
+    for (let member of members) {
+      textt += `${count} ↭ 🥈 @${member.split("@")[0]}\n`;
+      count++;
     }
 
-    let finalText = `${adminText}\n${memberText}\n${creatorText}`;
+    const creator = groupMetadata?.owner || "";
 
+  if (creator) {
+    textt += `\n🎉 Creator: @${creator.split("@")[0]}\n`;
+  }
+  
     Void.sendMessage(citel.chat, {
-        text: finalText,
-        mentions: participants.map((a) => a.id),
+      text: textt,
+      mentions: participants.map((a) => a.id),
     }, {
-        quoted: citel,
+      quoted: citel,
     });
-}
-
+  })
 
 cmd({
    pattern: "profile",
