@@ -18,26 +18,27 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
-    pattern: "vath",
+    pattern: "va",
     filename: __filename,
 },
 async (Void, citel, text) => {
     if (!citel.isGroup) return citel.reply(tlang().group);
-    const groupAdmins = await getAdmin(Void, citel)
-    const botNumber = await Void.decodeJid(Void.user.id)
-    const isBotAdmins = citel.isGroup ? groupAdmins.includes(botNumber) : false;
-    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+    
+    const groupAdmins = await getAdmin(Void, citel);
+    const botNumber = await Void.decodeJid(Void.user.jid);
+    const isBotAdmin = groupAdmins.includes(botNumber);
+    const isAdmin = groupAdmins.includes(citel.sender.jid);
 
-    if (!isAdmins) return citel.reply(tlang().admin);
-    if (!isBotAdmins) return citel.reply(tlang().admin);
+    if (!isAdmin) return citel.reply(tlang().admin);
+    if (!isBotAdmin) return citel.reply(tlang().botAdmin);
 
     try {
-        let users = citel.mentionedJid[0] ? citel.mentionedJid[0] : citel.quoted ? citel.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
-        if (!users) return;
+        let users = citel.mentionedJid[0] || citel.quoted?.sender || text.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+        if (!users) return citel.reply(tlang().invalidUser);
         await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
-        return citel.reply("_User kicked successfully_");
-    } catch {
-        return citel.reply(tlang().botAdmin);
+    } catch (error) {
+        console.error(error);
+        citel.reply(tlang().botAdmin);
     }
 });
 
