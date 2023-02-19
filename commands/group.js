@@ -8,32 +8,40 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
-  pattern: "صلوات",
-  fromMe: false,
-  desc: "احصل على أوقات الصلاة لموقع محدد",
-  usage: "/صلوات اليوم [المدينة]",
+  pattern: "ترادف",
+  desc: "العثور على الترادفات والعكس لكلمة عربية محددة",
+  usage: "/ترادف [الكلمة]",
   async (Void, message, match) => {
     try {
-      const city = match[1];
-      const response = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city}&country=EGYPT&method=8`);
+      const word = match[1];
+      const response = await fetch(`http://arabwordnet.com/api/rest/search/lemma?pattern=${word}&limit=1`);
       const data = await response.json();
-      const timings = data.data.timings;
+      const synsetIds = data.results[0].synsetIds;
 
-      let prayerTimes = `أوقات الصلاة لـ${city} اليوم:\n\n`;
-      prayerTimes += `الفجر: ${timings.Fajr}\n`;
-      prayerTimes += `الشروق: ${timings.Sunrise}\n`;
-      prayerTimes += `الظهر: ${timings.Dhuhr}\n`;
-      prayerTimes += `العصر: ${timings.Asr}\n`;
-      prayerTimes += `المغرب: ${timings.Maghrib}\n`;
-      prayerTimes += `العشاء: ${timings.Isha}\n`;
+      let synonyms = "الترادفات:\n\n";
+      let antonyms = "العكس:\n\n";
+      for (let id of synsetIds) {
+        const synsetResponse = await fetch(`http://arabwordnet.com/api/rest/synset/${id}`);
+        const synsetData = await synsetResponse.json();
+        const synsetWords = synsetData.words;
 
-      message.reply(prayerTimes);
+        for (let synsetWord of synsetWords) {
+          if (synsetWord.pos == "n") {
+            synonyms += `${synsetWord.lemma}\n`;
+          } else if (synsetWord.pos == "v") {
+            antonyms += `${synsetWord.lemma}\n`;
+          }
+        }
+      }
+
+      message.reply(`${synonyms}\n${antonyms}`);
     } catch (e) {
       console.error(e);
-      message.reply("حدث خطأ أثناء جلب أوقات الصلاة");
+      message.reply("حدث خطأ أثناء البحث عن الترادفات والعكس");
     }
   }
 });
+
 
 
 cmd({
