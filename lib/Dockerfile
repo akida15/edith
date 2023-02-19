@@ -3,7 +3,6 @@ RUN git clone https://github.com/asrher/akidasek /root/asrher
 WORKDIR /root/asrher/
 RUN npm install npm@latest
 RUN yarn install --network-concurrency 1
-RUN apt-get update && \
-    apt-get install -y ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
 EXPOSE 8000
 CMD ["npm", "start"]
