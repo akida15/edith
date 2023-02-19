@@ -6,6 +6,32 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
+
+
+cmd({
+    pattern: "hh",
+    filename: __filename
+}, async (client, message, args) => {
+    if (!message.isGroup) return client.reply(message.from, tlang().group, message.id);
+    const groupAdmins = await client.getGroupAdmins(message.from);
+    const botNumber = await client.getHostNumber();
+    const isBotAdmin = groupAdmins.includes(botNumber);
+    const isAdmin = groupAdmins.includes(message.author);
+
+    if (!isAdmin) return client.reply(message.from, tlang().admin, message.id);
+    if (!isBotAdmin) return client.reply(message.from, tlang().botAdmin, message.id);
+
+    try {
+        let users = message.mentionedIds[0] ? message.mentionedIds[0] : message.quoted ? message.quoted.sender : args.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+        if (!users) return;
+        await client.groupRemove(message.from, [users]);
+        await client.reply(message.from, tlang().success, message.id);
+    } catch (error) {
+        console.error(error);
+        await client.reply(message.from, tlang().error, message.id);
+    }
+});
+
 cmd({
             pattern: "ادخل",
         },
