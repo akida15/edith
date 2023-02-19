@@ -6,28 +6,6 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
-
-
-cmd({
-    pattern: "bb",
-    filename: __filename,
-},
-async (Void, citel, text) => {
-	if (!citel.isGroup) return citel.reply(tlang().group);
-	const groupAdmins = await getAdmin(Void, citel)
-	const botNumber = await Void.decodeJid(Void.user.id)
-	const isBotAdmins = citel.isGroup ? groupAdmins.includes(botNumber) : false;
-	const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-    if(!isAdmins) return client.sendMessage(citel.chat, "This is an admin only command", {quoted: citel})
-    if(!isBotAdmins) return client.sendMessage(citel.chat, "Make me an admin to use this command", {quoted: citel})
-    const mentions = await citel.getMentions()
-    if(!mentions.length) return client.sendMessage(citel.chat, "Please mention the user you want to kick", {quoted: citel})
-    const userID = mentions[0]
-    await client.groupRemove(citel.chat, [userID])
-    await client.sendMessage(citel.chat, `Successfully kicked user with ID: ${userID}`, {quoted: citel})
-})
-
-
 cmd({
             pattern: "ادخل",
         },
@@ -112,64 +90,62 @@ cmd({
 //---------------------------------------------------------------------------
 
 cmd({
-pattern: "منشن",
-filename: __filename,
-},
-async(Void, citel, text,{ isCreator }) => {
-if (!citel.isGroup) return citel.reply(tlang().group);
-const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
-const participants = citel.isGroup ? await groupMetadata.participants : "";
-const groupAdmins = await getAdmin(Void, citel)
-const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-if (!isAdmins) return citel.reply(tlang().admin);
+    pattern: "akida",
+    filename: __filename,
+  },
+  async(Void, citel, text,{ isCreator }) => {
+    if (!citel.isGroup) return citel.reply(tlang().group);
+    const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+    const participants = citel.isGroup ? await groupMetadata.participants : "";
+    const groupAdmins = await getAdmin(Void, citel)
+    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+    if (!isAdmins) return citel.reply(tlang().admin);
+  
+    const admins = []
+    const members = []
+    for (let mem of participants) {
+      if (groupAdmins.includes(mem.id)) {
+        admins.push(mem.id)
+      } else {
+        members.push(mem.id)
+      }
+    }
+  
+    let textt = `${text ? text : "السلام عليكم"}\n\n`
 
-  const admins = []
-const members = []
-for (let mem of participants) {
-  if (groupAdmins.includes(mem.id)) {
-    admins.push(mem.id)
-  } else {
-    members.push(mem.id)
-  }
-}
-
-let textt = `${text ? text : "السلام عليكم"}\n\n`
-
-
-
-if (admins.length > 0) {
-  textt += "المشرفين 🥇:\n\n"
-  let count = 1;
-  for (let admin of admins) {
-    textt += `${count} ↭ @${admin.split("@")[0]}\n`;
-    count++;
-  }
-}
-
-if (members.length > 0) {
-  textt += "\nالأعضاء 🥈:\n\n"
-  let count = 1;
-  for (let member of members) {
-    textt += `${count} ↭ @${member.split("@")[0]}\n`;
-    count++;
-  }
-}
-
-const creator = groupMetadata?.owner || "";
-
-if (creator) {
-  textt += `\nالمؤسس 🤴: @${creator.split("@")[0]}\n`;
-}
-
-Void.sendMessage(citel.chat, {
-  text: textt,
-  mentions: participants.map((a) => a.id),
-}, {
-  quoted: citel,
-  alignment: "right",
-});
-})
-
+    
+  
+    if (admins.length > 0) {
+textt += "المشرفين 🥇:\n\n"
+      let count = 1;
+      for (let admin of admins) {
+        textt += `ـ${count} ↭ @${admin.split("@")[0]}\n`;
+        count++;
+      }
+    }
+  
+    if (members.length > 0) {
+textt += "\nالأعضاء 🥈:\n\n"
+      let count = 1;
+      for (let member of members) {
+        textt += `ـ${count} ↭ @${member.split("@")[0]}\n`;
+        count++;
+      }
+    }
+  
+    const creator = groupMetadata?.owner || "";
+  
+    if (creator) {
+textt += `\nالمؤسس 🤴: ـ@${creator.split("@")[0]}\n`;
+    }
+  
+    Void.sendMessage(citel.chat, {
+      text: textt,
+      mentions: participants.map((a) => a.id),
+    }, {
+      quoted: citel,
+    });
+  })
   
   
 
