@@ -9,12 +9,17 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 
 
 cmd({
-    pattern: "uu",
+    pattern: "طرد",
     filename: __filename,
 },
 async (Void, citel, text) => {
-    if(!isAdmin) return client.sendMessage(citel.chat, "This is an admin only command", {quoted: citel})
-    if(!isBotAdmin) return client.sendMessage(citel.chat, "Make me an admin to use this command", {quoted: citel})
+	if (!citel.isGroup) return citel.reply(tlang().group);
+	const groupAdmins = await getAdmin(Void, citel)
+	const botNumber = await Void.decodeJid(Void.user.id)
+	const isBotAdmins = citel.isGroup ? groupAdmins.includes(botNumber) : false;
+	const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+    if(!isAdmins) return client.sendMessage(citel.chat, "This is an admin only command", {quoted: citel})
+    if(!isBotAdmins) return client.sendMessage(citel.chat, "Make me an admin to use this command", {quoted: citel})
     const mentions = await citel.getMentions()
     if(!mentions.length) return client.sendMessage(citel.chat, "Please mention the user you want to kick", {quoted: citel})
     const userID = mentions[0]
