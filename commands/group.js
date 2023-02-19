@@ -17,67 +17,51 @@ const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
 
+global.owner = process.env.OWNER_NUMBER.split(",");
+
 cmd({
-    pattern: "akida",
-    filename: __filename,
+  pattern: "akida",
+  filename: __filename,
 },
-async(Void, citel, text,{ isCreator }) => {
-    if (!citel.isGroup) return citel.reply(tlang().group);
-    const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
-    const participants = citel.isGroup ? await groupMetadata.participants : "";
-    const groupAdmins = await getAdmin(Void, citel)
-    const groupOwner = await groupMetadata.owner || ""
-    const botOwner = await Void.getContactOwner() || ""
-    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-    if (!isAdmins) return citel.reply(tlang().admin);
+async(Void, citel, text, { isCreator }) => {
+  if (!citel.isGroup) return citel.reply(tlang().group);
 
-    const admins = []
-    const members = []
-    let botOwnerText = ""
-    let groupOwnerText = ""
+  const groupMetadata = await Void.groupMetadata(citel.chat).catch((e) => {});
+  const participants = groupMetadata?.participants || [];
+  const groupAdmins = await getAdmin(Void, citel);
+  const isAdmin = groupAdmins.includes(citel.sender);
 
-    for (let mem of participants) {
-        if (mem.id === botOwner) {
-            botOwnerText = `🤖 *@${mem.id.split("@")[0]}*`
-        } else if (mem.id === groupOwner) {
-            groupOwnerText = `👑 *@${mem.id.split("@")[0]}*`
-        } else if (groupAdmins.includes(mem.id)) {
-            admins.push(mem.id)
-        } else {
-            members.push(mem.id)
-        }
+  if (!isAdmin && !global.owner.includes(citel.sender)) {
+    return citel.reply(tlang().admin);
+  }
+
+  let textt = `${text ? text : "السلام عليكم"}\n\n`;
+  let count = 1;
+
+  for (let mem of participants) {
+    let emoji = "❄️";
+
+    if (groupAdmins.includes(mem.id)) {
+      emoji = "👑";
     }
 
-    let textt = `${text ? text : "السلام عليكم"}\n\n`
-    let count = 1;
+    textt += `${count} ${emoji} @${mem.id.split("@")[0]}\n`;
+    count++;
+  }
 
-    if (botOwnerText) {
-        textt += `${count} ↭ ${botOwnerText}\n`;
-        count++;
-    }
+  const creator = groupMetadata?.owner || "";
 
-    if (groupOwnerText) {
-        textt += `${count} ↭ ${groupOwnerText}\n`;
-        count++;
-    }
+  if (creator) {
+    textt += `\n🎉 Creator: @${creator.split("@")[0]}\n`;
+  }
 
-    for (let i = 0; i < admins.length; i++) {
-        textt += `${count} 🥇 *@${admins[i].split('@')[0]}*\n`;
-        count++;
-    }
-
-    for (let i = 0; i < members.length; i++){
-        textt += `${count} 🥈 *@${members[i].split('@')[0]}*\n`;
-        count++;
-    }
-
-    Void.sendMessage(citel.chat, {
-        text: textt,
-        mentions: participants.map((a) => a.id),
-    }, {
-        quoted: citel,
-    });
-})
+  Void.sendMessage(citel.chat, {
+    text: textt,
+    mentions: participants.map((a) => a.id),
+  }, {
+    quoted: citel,
+  });
+});
 
 
 
