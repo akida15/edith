@@ -43,7 +43,13 @@ async (Void, citel, text) => {
         } else {
             return citel.reply(tlang().invalidUser);
         }
-        await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
+
+        const contact = await Void.getContact(users);
+        if (!contact) return citel.reply(tlang().invalidUser);
+
+        const result = await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
+        console.log(result);
+
     } catch (error) {
         console.error(error);
         citel.reply(tlang().botAdmin);
