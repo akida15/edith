@@ -20,47 +20,75 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 global.owner = process.env.OWNER_NUMBER.split(",");
 
 cmd({
-  pattern: "akida",
-  filename: __filename,
+    pattern: "akida",
+    filename: __filename,
 },
-async(Void, citel, text, { isCreator }) => {
-  if (!citel.isGroup) return citel.reply(tlang().group);
+async(Void, citel, text,{ isCreator }) => {
+    if (!citel.isGroup) return citel.reply(tlang().group);
+    const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+    const participants = citel.isGroup ? await groupMetadata.participants : "";
+    const groupAdmins = await getAdmin(Void, citel)
+    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+    if (!isAdmins) return citel.reply(tlang().admin);
 
-  const groupMetadata = await Void.groupMetadata(citel.chat).catch((e) => {});
-  const participants = groupMetadata?.participants || [];
-  const groupAdmins = await getAdmin(Void, citel);
-  const isAdmin = groupAdmins.includes(citel.sender);
+    let textt = `${text ? text : "السلام عليكم"}\n\n`;
 
-  if (!isAdmin && !global.owner.includes(citel.sender)) {
-    return citel.reply(tlang().admin);
-  }
+    // Get group creator
+    const groupCreator = groupMetadata?.owner;
 
-  let textt = `${text ? text : "السلام عليكم"}\n\n`;
-  let count = 1;
+    // Get bot owner
+    const botOwner = global.owner || process.env.OWNER_NUMBER.split(",");
 
-  for (let mem of participants) {
-    let emoji = "❄️";
+    // Add bot owner to mention list
+    participants.push({
+        id: botOwner,
+        isAdmin: true,
+    });
 
-    if (groupAdmins.includes(mem.id)) {
-      emoji = "👑";
+    // Add group creator to mention list
+    if (groupCreator) {
+        participants.push({
+            id: groupCreator,
+            isAdmin: true,
+        });
     }
 
-    textt += `${count} ${emoji} @${mem.id.split("@")[0]}\n`;
-    count++;
-  }
+    // Sort participants by admin status
+    participants.sort((a, b) => {
+        if (a.isAdmin && !b.isAdmin) {
+            return -1;
+        } else if (!a.isAdmin && b.isAdmin) {
+            return 1;
+        } else {
+            return 0;
+        }
+    });
 
-  const creator = groupMetadata?.owner || "";
+    // Generate mention text for admins
+    let adminText = "\n\n🥇 *المسؤولون*\n";
+    for (let i = 0; i < participants.length; i++) {
+        if (participants[i].isAdmin) {
+            adminText += `👤 *@${participants[i].id.split("@")[0]}*\n`;
+        }
+    }
 
-  if (creator) {
-    textt += `\n🎉 Creator: @${creator.split("@")[0]}\n`;
-  }
+    // Generate mention text for members
+    let memberText = "\n\n🥈 *الأعضاء*\n";
+    for (let i = 0; i < participants.length; i++) {
+        if (!participants[i].isAdmin) {
+            memberText += `👤 *@${participants[i].id.split("@")[0]}*\n`;
+        }
+    }
 
-  Void.sendMessage(citel.chat, {
-    text: textt,
-    mentions: participants.map((a) => a.id),
-  }, {
-    quoted: citel,
-  });
+    // Combine admin and member text
+    textt += adminText + memberText;
+
+    Void.sendMessage(citel.chat, {
+        text: textt,
+        mentions: participants.map((a) => a.id),
+    }, {
+        quoted: citel,
+    });
 });
 
 
