@@ -90,7 +90,7 @@ cmd({
 //---------------------------------------------------------------------------
 
 cmd({
-    pattern: "akida",
+    pattern: "منشن",
     filename: __filename,
   },
   async(Void, citel, text,{ isCreator }) => {
@@ -116,17 +116,19 @@ cmd({
     
   
     if (admins.length > 0) {
+textt += "المشرفين 🥇:\n\n"
       let count = 1;
       for (let admin of admins) {
-        textt += `ـ ${count} 🥇 @${admin.split("@")[0]}\n`;
+        textt += `ـ ${count} ↭ @${admin.split("@")[0]}\n`;
         count++;
       }
     }
   
     if (members.length > 0) {
+textt += "\nالأعضاء 🥈:\n\n"
       let count = 1;
       for (let member of members) {
-        textt += `ـ ${count} 🥈 @${member.split("@")[0]}\n`;
+        textt += `ـ ${count} ↭ @${member.split("@")[0]}\n`;
         count++;
       }
     }
@@ -144,6 +146,7 @@ textt += `\nالمؤسس 🤴: @${creator.split("@")[0]}\n`;
       quoted: citel,
     });
   })
+  
   
 
 
