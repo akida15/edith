@@ -18,55 +18,61 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
-    pattern: "akida",
-    filename: __filename,
-  },
-  async(Void, citel, text,{ isCreator }) => {
-    if (!citel.isGroup) return citel.reply(tlang().group);
-    const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
-    const participants = citel.isGroup ? await groupMetadata.participants : "";
-    const groupAdmins = await getAdmin(Void, citel)
-    const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
-    if (!isAdmins) return citel.reply(tlang().admin);
-  
-    const admins = []
-    const members = []
-    for (let mem of participants) {
-      if (groupAdmins.includes(mem.id)) {
-        admins.push(mem.id)
-      } else {
-        members.push(mem.id)
-      }
+  pattern: "akida",
+  filename: __filename,
+},
+async(Void, citel, text,{ isCreator }) => {
+  if (!citel.isGroup) return citel.reply(tlang().group);
+  const groupMetadata = citel.isGroup ? await Void.groupMetadata(citel.chat).catch((e) => {}) : "";
+  const participants = citel.isGroup ? await groupMetadata.participants : "";
+  const groupAdmins = await getAdmin(Void, citel)
+  const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
+  if (!isAdmins) return citel.reply(tlang().admin);
+
+  const admins = []
+  const members = []
+  for (let mem of participants) {
+    if (groupAdmins.includes(mem.id)) {
+      admins.push(mem.id)
+    } else {
+      members.push(mem.id)
     }
-    {
-    let textt = "hh"
+  }
+
+  let textt = ""
+
+  if (admins.length > 0) {
+    textt += "🥇 Admins:\n\n"
     let count = 1;
     for (let admin of admins) {
-      textt += `${count} ↭ 🥇 @${admin.split("@")[0]}\n`;
+      textt += `${count} ↭ @${admin.split("@")[0]}\n`;
       count++;
-    }}
+    }
+  }
 
-    {
-    let textt = "kk"
+  if (members.length > 0) {
+    textt += "\n🥈 Members:\n\n"
     let count = 1;
     for (let member of members) {
-      textt += `${count} ↭ 🥈 @${member.split("@")[0]}\n`;
+      textt += `${count} ↭ @${member.split("@")[0]}\n`;
       count++;
-    }}
+    }
+  }
 
-    const creator = groupMetadata?.owner || "";
+  const creator = groupMetadata?.owner || "";
 
   if (creator) {
     textt += `\n🎉 Creator: @${creator.split("@")[0]}\n`;
   }
-  
-    Void.sendMessage(citel.chat, {
-      text: textt,
-      mentions: participants.map((a) => a.id),
-    }, {
-      quoted: citel,
-    });
-  })
+
+  Void.sendMessage(citel.chat, {
+    text: textt,
+    mentions: participants.map((a) => a.id),
+  }, {
+    quoted: citel,
+  });
+})
+
 
 cmd({
    pattern: "profile",
