@@ -33,14 +33,23 @@ async (Void, citel, text) => {
     if (!isBotAdmin) return citel.reply(tlang().botAdmin);
 
     try {
-        let users = citel.mentionedJid[0] || citel.quoted?.sender || text.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
-        if (!users) return citel.reply(tlang().invalidUser);
+        let users;
+        if (citel.quoted) {
+            users = citel.quoted.sender;
+        } else if (citel.mentionedJid.length > 0) {
+            users = citel.mentionedJid[0];
+        } else if (/^([0-9]{5,20})@s.whatsapp.net$/.test(text)) {
+            users = text;
+        } else {
+            return citel.reply(tlang().invalidUser);
+        }
         await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
     } catch (error) {
         console.error(error);
         citel.reply(tlang().botAdmin);
     }
 });
+
 
 
 cmd({
