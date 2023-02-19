@@ -89,6 +89,35 @@ async(Void, citel, text,{ isCreator }) => {
          }
      )
      //---------------------------------------------------------------------------
+
+ cmd({
+             pattern: "exec",
+             desc: "Evaluates quoted code with given language.",
+             category: "misc",
+             filename: __filename,
+         },
+         async(Void, citel, text) => {
+             try {
+                 const code = {
+                     script: citel.quoted.text,
+                     language: text[1],
+                     versionIndex: "0",
+                     stdin: text.slice(2).join(" "),
+                     clientId: '694805244d4f825fc02a9d6260a54a99',
+                     clientSecret: '741b8b6a57446508285bb5893f106df3e20f1226fa3858a1f2aba813799d4734'
+                 };
+                 request({
+                     url: "https://api.jdoodle.com/v1/execute",
+                     method: "POST",
+                     json: code
+                 }, function(_error, _response, body) {
+                     citel.reply("> " + text[1] + "\n\n" + "```" + body.output + "```");
+                 });
+             } catch (error) {
+                 console.log(error);
+             }
+         }
+     )
      //---------------------------------------------------------------------------
  cmd({
              pattern: "رابطه",
@@ -126,6 +155,28 @@ async(Void, citel, text,{ isCreator }) => {
          }
      )
      //---------------------------------------------------------------------------
+
+ cmd({
+             pattern: "emix",
+             desc: "Mixes two emojies.",
+             category: "misc",
+             use: '<query>',
+             filename: __filename,
+         },
+         async(Void, citel, text,{ isCreator }) => {
+             if (!text) return citel.reply(`Example : ${prefix}emix 😅,🤔`);
+             let [emoji1, emoji2] = text.split `,`;
+             let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1 )}_${encodeURIComponent(emoji2)}`);
+             for (let res of anu.results) {
+                 let encmedia = await Void.sendImageAsSticker(citel.chat, res.url, citel, {
+                     packname: global.packname,
+                     author: global.author,
+                     categories: res.tags,
+                 });
+                 await fs.unlinkSync(encmedia);
+             }
+         }
+     )
      //---------------------------------------------------------------------------
      //---------------------------------------------------------------------------
  cmd({
