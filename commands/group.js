@@ -18,7 +18,7 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
 //---------------------------------------------------------------------------
 
 cmd({
-    pattern: "منشن",
+    pattern: "akida",
     filename: __filename,
   },
   async(Void, citel, text,{ isCreator }) => {
