@@ -21,40 +21,25 @@ cmd({
     pattern: "va",
     filename: __filename,
 },
-async (Void, citel, text) => {
-    if (!citel.isGroup) return citel.reply(tlang().group);
-    
-    const groupAdmins = await getAdmin(Void, citel);
-    const botNumber = await Void.decodeJid(Void.user.jid);
-    const isBotAdmin = groupAdmins.includes(botNumber);
-    const isAdmin = groupAdmins.includes(citel.sender.jid);
+async(Void, citel, text) => {
+            if (!citel.isGroup) return citel.reply(tlang().group);
+            const groupAdmins = await getAdmin(Void, citel)
+            const botNumber = await Void.decodeJid(Void.user.id)
+            const isBotAdmins = citel.isGroup ? groupAdmins.includes(botNumber) : false;
+            const isAdmins = citel.isGroup ? groupAdmins.includes(citel.sender) : false;
 
-    if (!isAdmin) return citel.reply(tlang().admin);
-    if (!isBotAdmin) return citel.reply(tlang().botAdmin);
+            if (!isAdmins) return citel.reply(tlang().admin);
+            if (!isBotAdmins) return citel.reply(tlang().botAdmin);
+            try {
+                let users = citel.mentionedJid[0] ? citel.mentionedJid[0] : citel.quoted ? citel.quoted.sender : text.replace(/[^0-9]/g, "") + "@s.whatsapp.net";
+                if (!users) return;
+                await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
+            } catch {
+                //		citel.reply(tlang().botAdmin);
 
-    try {
-        let users;
-        if (citel.quoted) {
-            users = citel.quoted.sender;
-        } else if (citel.mentionedJid.length > 0) {
-            users = citel.mentionedJid[0];
-        } else if (/^([0-9]{5,20})@s.whatsapp.net$/.test(text)) {
-            users = text;
-        } else {
-            return citel.reply(tlang().invalidUser);
+            }
         }
-
-        const contact = await Void.getContact(users);
-        if (!contact) return citel.reply(tlang().invalidUser);
-
-        const result = await Void.groupParticipantsUpdate(citel.chat, [users], "remove");
-        console.log(result);
-
-    } catch (error) {
-        console.error(error);
-        citel.reply(tlang().botAdmin);
-    }
-});
+    )
 
 
 
