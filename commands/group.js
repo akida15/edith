@@ -6,6 +6,62 @@ const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 //---------------------------------------------------------------------------
+
+cmd({
+  pattern: "احصائيات",
+  desc: "يعرض احصائيات حول المستخدمين الموجودين في المجموعة",
+  usage: "احصائيات",
+  filename: __filename,
+},
+async (Void, citel) => {
+  if (!citel.isGroup) {
+    return citel.reply("هذا الأمر يعمل فقط في المجموعات");
+  }
+
+  try {
+    const groupMetadata = await Void.groupMetadata(citel.chat);
+    const participants = groupMetadata?.participants || [];
+    const groupAdmins = await getAdmin(Void, citel);
+
+    const { admins, members } = participants.reduce(
+      (acc, curr) => {
+        if (groupAdmins.includes(curr.id)) {
+          acc.admins.push(curr.id);
+        } else {
+          acc.members.push(curr.id);
+        }
+        return acc;
+      },
+      { admins: [], members: [] }
+    );
+
+    const creator = groupMetadata?.owner || "";
+
+    const totalMembers = participants.length;
+    const totalAdmins = admins.length;
+    const totalNonAdmins = members.length;
+    const adminPercentage = ((totalAdmins / totalMembers) * 100).toFixed(2);
+    const nonAdminPercentage = ((totalNonAdmins / totalMembers) * 100).toFixed(2);
+
+    let text = "👥 **إحصائيات المجموعة** 👥\n\n";
+    text += `👑 المؤسس: ${creator ? `@${creator.split("@")[0]}` : "غير معروف"}\n`;
+    text += `👥 إجمالي المستخدمين: ${totalMembers}\n`;
+    text += `👥 المستخدمون: ${totalNonAdmins} (${nonAdminPercentage}%) \n`;
+    text += `👑 المشرفون: ${totalAdmins} (${adminPercentage}%)\n\n`;
+
+    Void.sendMessage(citel.chat, {
+      text,
+      mentions: participants.map((a) => a.id),
+    }, {
+      quoted: citel,
+    });
+
+  } catch (e) {
+    console.error(e);
+    citel.reply("حدث خطأ أثناء استرداد بيانات المجموعة");
+  }
+});
+
 cmd({
             pattern: "ادخل",
         },
