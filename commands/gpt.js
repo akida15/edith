@@ -134,7 +134,7 @@ async (Void, citel) => {
 
 
 cmd({
-    pattern: "تحويل",
+    pattern: "1تحويل",
     filename: __filename,
 },
 async (Void, citel, text) => {
@@ -166,13 +166,10 @@ async function getConversionRate(from, to) {
 
 cmd({
   pattern: "roll",
-  fromMe: true,
-  desc: "Roll a dice",
-  usage: ".roll <number of dice sides>",
   }, async (message, match) => {
     const sides = match[1];
     const roll = Math.floor(Math.random() * sides) + 1;
-    await message.client.sendMessage(message.jid, `🎲 You rolled a ${roll} out of ${sides}!`, MessageType.text);
+  await citel.reply(`🎲 You rolled a ${roll} out of ${sides}!`) 
 });
  
 
@@ -180,20 +177,23 @@ cmd({
   pattern: "news",
   fromMe: true,
   desc: "Get the latest anime news in Arabic",
-  }, async (message, match) => {
-    const url = "https://newsapi.org/v2/top-headlines?country=sa&category=entertainment&q=anime&apiKey=cada6c084c244d45aac0bc858adecc29";
-    try {
-      const response = await axios.get(url);
-      const articles = response.data.articles;
-      let articleList = "";
-      for (let i = 0; i < articles.length; i++) {
-        const title = articles[i].title;
-        const description = articles[i].description;
-        articleList += `📰 *${title}*\n${description}\n\n`;
-      }
-      await message.client.sendMessage(message.jid, `🎌 *Latest anime news in Arabic* 🎌\n\n${articleList}`, MessageType.text);
-    } catch (error) {
-      console.error(error);
-      await message.client.sendMessage(message.jid, "An error occurred while getting the latest anime news in Arabic.", MessageType.text);
+}, async (Void, citel) => {
+  const url = "https://newsapi.org/v2/top-headlines?country=sa&category=entertainment&q=anime&apiKey=cada6c084c244d45aac0bc858adecc29";
+  try {
+    const response = await axios.get(url);
+    const articles = response.data.articles;
+    let articleList = "";
+    for (let i = 0; i < articles.length; i++) {
+      const title = articles[i].title;
+      const description = articles[i].description;
+      articleList += `📰 *${title}*\n${description}\n\n`;
     }
+    await Void.sendMessage(citel.chat, { 
+      text: `🎌 *Latest anime news in Arabic* 🎌\n\n${articleList}`,
+      quoted: citel
+    }, MessageType.text);
+  } catch (error) {
+    console.error(error);
+    await Void.sendMessage(citel.chat, "An error occurred while getting the latest anime news in Arabic.", MessageType.text);
+  }
 });
