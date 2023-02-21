@@ -108,7 +108,7 @@ async (Void, citel) => {
   }
 });
 cmd({
-  pattern: "pokemon2",
+  pattern: "pokemon3",
   filename: __filename,
 },
 async (Void, citel) => {
