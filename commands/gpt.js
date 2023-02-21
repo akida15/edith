@@ -4,6 +4,9 @@ const fs = require('fs-extra')
 const Levels = require("discord-xp");
 const canvacord = require("canvacord");
 const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
+let gis = require("g-i-s");
+const axios = require('axios')
+const fetch = require('node-fetch')
 
 
 cmd({
