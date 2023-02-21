@@ -10,7 +10,7 @@ cmd({
 }, async (Void, message, {text}) => {
   if (!text) throw 'Please provide text to chat with GPT AI';
   try {
-    let tiores = await fetchJson(`https://api.lolhuman.xyz/api/openai?apikey=${lolkeysapi}&text=${text}&user=user-unique-id`)
+    let tiores = await fetchJson(`https://api.lolhuman.xyz/api/openai?apikey=BrunoSobrino&text=${text}&user=user-unique-id`)
     let hasil = tlang(hasil.result)
     await Void.reply(message.chat, hasil, message.id)
   } catch (error) {
