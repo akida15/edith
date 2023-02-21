@@ -12,15 +12,33 @@ cmd({
 },
 async (Void, citel) => {
   try {
-    const response = await axios.get("https://onepiece.fandom.com/api.php?action=query&format=json&list=random&rnnamespace=0&rnlimit=1");
-    const characterName = response.data.query.random[0].title.replace(" ", "_");
-    const imageUrl = `https://vignette.wikia.nocookie.net/onepiece/images/4/4d/${characterName}.png/revision/latest?cb=${new Date().getTime()}`;
-
-    const image = await axios.get(imageUrl, { responseType: "arraybuffer" });
-    await citel.sendMessage(citel.jid, Buffer.from(image.data), MessageType.image, { quoted: citel.data, mimetype: Mimetype.png });
+    const response = await axios.get("https://onepiece-treasurecruise.com/wp-json/wp/v2/posts?categories=2");
+    const characters = response.data;
+    const character = characters[Math.floor(Math.random() * characters.length)];
+    const imageUrl = character.better_featured_image.media_details.sizes.full.source_url;
+    await Void.sendMessage(citel.chat, {image: { url: imageUrl }});
   } catch (error) {
     console.error(error);
-    await citel.reply("Sorry, something went wrong while generating the One Piece character image :(");
+    await citel.reply("Sorry, something went wrong while fetching the One Piece character image :(");
+  }
+});
+
+
+cmd({
+  pattern: "pokemon",
+  filename: __filename,
+},
+async (Void, citel) => {
+  try {
+    const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1118");
+    const randomPokemonIndex = Math.floor(Math.random() * response.data.results.length);
+    const randomPokemonUrl = response.data.results[randomPokemonIndex].url;
+    const pokemonResponse = await axios.get(randomPokemonUrl);
+    const pokemonImageUrl = pokemonResponse.data.sprites.other["official-artwork"].front_default;
+    await Void.sendMessage(citel.chat, {image: { url: pokemonImageUrl }});
+  } catch (error) {
+    console.error(error);
+    await citel.reply("Sorry, something went wrong while fetching the Pokémon image :(");
   }
 });
 
