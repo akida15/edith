@@ -6,7 +6,6 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
   //---------------------------------------------------------------------------
  
  const { createCanvas, loadImage } = require("wa-image-tools");
-const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
 
 cmd({
   pattern: "onepiece",
