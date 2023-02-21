@@ -1,40 +1,27 @@
-const { sck, sck1, cmd, jsonformat, botpic, TelegraPh, RandomXP, Config, tlang, warndb, sleep, getAdmin, getBuffer, prefix } = require('../lib');
-const moment = require("moment-timezone");
+const axios = require('axios')
+const { sck1, tiny, fancytext, listall,cmd } = require('../lib/')
 const fs = require('fs-extra');
-const Levels = require("discord-xp");
-const canvacord = require("canvacord");
-const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
-let gis = require("g-i-s");
-const axios = require('axios');
-const fetch = require('node-fetch');
-
-
+const { exec } = require('child_process')
 cmd({
-    pattern: "gpt",
-    filename: __filename
-},
-async (match, message) => {
-    const prompt = match[1];
-    const apiKey = "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"; // replace with your OpenAI API key
-    const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
-    
-    try {
-        const response = await axios.post(apiUrl, {
-            prompt: prompt,
-            max_tokens: 50,
-            n: 1,
-            temperature: 0.7
-        }, {
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${apiKey}`
+            pattern: "أنمي",
+            filename: __filename
+        },
+        async(Void, citel, text) => {
+            if (!text) return citel.reply('ما هو عنوان الأنمي الذي تريد الاقتراح عليه؟')
+            try {
+                anime = text;
+                anu = await axios.get(`https://api.jikan.moe/v3/search/anime?q=${anime}&page=1`);
+                data = anu.data.results[0];
+                if (!data) return citel.reply('عذرا، لم يتم العثور على نتائج لهذا البحث');
+                citel.reply(
+                    `*إليك بعض الاقتراحات لأنمي ${anime}:*\n\n` +
+                    `*اسم الأنمي*: ${data.title}\n` +
+                    `*عدد الحلقات*: ${data.episodes}\n` +
+                    `*التقييم*: ${data.score}\n` +
+                    `*الرابط*: ${data.url}`
+                );
+            } catch (e) {
+                console.log(e);
             }
-        });
-        
-        const completion = response.data.choices[0].text;
-        message.reply(`Here's what GPT-3 says: ${completion}`);
-    } catch (error) {
-        console.log(error);
-        message.reply("Sorry, I couldn't get a response from GPT-3.");
-    }
-});
+        }
+    )
