@@ -15,7 +15,7 @@ cmd({
 },
 async (match, message) => {
     const prompt = match[1];
-    const apiKey = "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"; // replace with your OpenAI API key
+    const apiKey = "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"; // replace with your OpenAI API key
     const apiUrl = "https://api.openai.com/v1/engines/davinci-codex/completions";
     
     try {
