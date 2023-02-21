@@ -32,7 +32,7 @@ cmd({
 },
 async (Void, citel) => {
   try {
-    await citel.sendMessage(citel.jid, { url: "https://i.imgur.com/DjgYHTy.png" }, MessageType.image);
+    await Void.sendMessage(citel.chat, {image: { url:  "https://i.imgur.com/DjgYHTy.png" }});
   } catch (error) {
     console.error(error);
     await citel.reply("Sorry, something went wrong while sending the Zoro image :(");
@@ -55,5 +55,21 @@ async (Void, citel) => {
     await citel.reply("Sorry, something went wrong while fetching the cat image :(");
   }
 });
+
+cmd({
+  pattern: "catt",
+  filename: __filename,
+},
+async (Void, citel) => {
+  try {
+    const response = await axios.get("https://api.thecatapi.com/v1/images/search");
+    const imageUrl = response.data[0].url;
+    await Void.sendMessage(citel.chat, {url: imageUrl}, MessageType.image); // corrected object format and added MessageType to specify image type
+  } catch (error) {
+    console.error(error);
+    await citel.reply("Sorry, something went wrong while fetching the cat image :(");
+  }
+});
+
 
 
