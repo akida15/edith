@@ -64,69 +64,24 @@ async (Void, citel) => {
   }
 });
 
+const axios = require('axios');
+
 cmd({
-  pattern: "cat1",
+  pattern: "animal",
   fromMe: true,
 },
 async (message, match) => {
   try {
-    const response = await axios.get("https://api.thecatapi.com/v1/images/search");
-    const catImageUrl = response.data[0].url;
-    await message.client.sendMessage(message.jid, {
-      image: { url: catImageUrl }
-    }, MessageType.image);
-  } catch (error) {
-    console.error(error);
-    await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the cat image :(", MessageType.text);
-  }
-});
-
-
-
-cmd({
-  pattern: "نكتة",
-  fromMe: true,
-},
-async (message, match) => {
-  try {
-    const response = await axios.get("https://icanhazdadjoke.com/", {
-      headers: {
-        Accept: "application/json",
-        "User-Agent": "MyBot/1.0",
-      },
+    const response = await axios.get("https://api.unsplash.com/photos/random", {
       params: {
-        lang: "ar",
+        query: "animals",
+        client_id: "xAxA4SsnCLw9WA7pnxiR3D8LbgMUSQ8N8UEx2wtYsg4",
       },
     });
-    const joke = response.data.joke;
-    await message.client.sendMessage(message.jid, joke, MessageType.text);
+    const imageUrl = response.data.urls.regular;
+    await message.client.sendMessage(message.jid, {image: {url: imageUrl}}, MessageType.image);
   } catch (error) {
     console.error(error);
-    await message.client.sendMessage(message.jid, "عذراً، حدث خطأ أثناء جلب النكتة :(", MessageType.text);
+    await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the animal image :(", MessageType.text);
   }
 });
-
-
-cmd({
-  pattern: "animequote",
-  fromMe: true,
-},
-async (message, match) => {
-  try {
-    const response = await axios.get("https://animechan.vercel.app/api/random", {
-      headers: {
-        "Accept-Language": "ar",
-      },
-    });
-    const anime = response.data.anime;
-    const character = response.data.character;
-    const quote = response.data.quote;
-    const formattedQuote = `"${quote}" - ${character} (${anime})`;
-    await message.client.sendMessage(message.jid, formattedQuote, MessageType.text);
-  } catch (error) {
-    console.error(error);
-    await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the anime quote :(", MessageType.text);
-  }
-});
-
-
