@@ -176,8 +176,6 @@ cmd({
 });
  
 
-const axios = require('axios');
-
 cmd({
   pattern: "news",
   fromMe: true,
