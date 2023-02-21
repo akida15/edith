@@ -6,22 +6,6 @@ const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter")
  const axios = require('axios')
   //---------------------------------------------------------------------------
 
-cmd({
-  pattern: "onepiece",
-  filename: __filename,
-},
-async (Void, citel) => {
-  try {
-    const response = await axios.get("https://onepiece-treasurecruise.com/wp-json/wp/v2/posts?categories=2");
-    const characters = response.data;
-    const character = characters[Math.floor(Math.random() * characters.length)];
-    const imageUrl = character.better_featured_image.media_details.sizes.full.source_url;
-    await Void.sendMessage(citel.chat, {image: { url: imageUrl }});
-  } catch (error) {
-    console.error(error);
-    await citel.reply("Sorry, something went wrong while fetching the One Piece character image :(");
-  }
-});
 
 
 cmd({
@@ -43,22 +27,6 @@ async (Void, citel) => {
 });
 
 
-
-cmd({
-  pattern: "zoro",
-  filename: __filename,
-},
-async (Void, citel) => {
-  try {
-    await Void.sendMessage(citel.chat, {image: { url:  "https://i.imgur.com/DjgYHTy.png" }});
-  } catch (error) {
-    console.error(error);
-    await citel.reply("Sorry, something went wrong while sending the Zoro image :(");
-  }
-});
-
-
-
 cmd({
   pattern: "cat",
   filename: __filename,
@@ -75,19 +43,24 @@ async (Void, citel) => {
 });
 
 cmd({
-  pattern: "catt",
+  pattern: "pokemon1",
   filename: __filename,
 },
 async (Void, citel) => {
   try {
-    const response = await axios.get("https://api.thecatapi.com/v1/images/search");
-    const imageUrl = response.data[0].url;
-    await Void.sendMessage(citel.chat, {url: imageUrl}, MessageType.image); // corrected object format and added MessageType to specify image type
+    const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=1118");
+    const randomPokemonIndex = Math.floor(Math.random() * response.data.results.length);
+    const randomPokemonUrl = response.data.results[randomPokemonIndex].url;
+    const pokemonResponse = await axios.get(randomPokemonUrl);
+    const pokemonName = pokemonResponse.data.name;
+    const pokemonImageUrl = pokemonResponse.data.sprites.other["official-artwork"].front_default;
+    await Void.sendMessage(citel.chat, {
+      image: { url: pokemonImageUrl },
+      caption: `Here's a random Pokémon: ${pokemonName}!`
+    });
   } catch (error) {
     console.error(error);
-    await citel.reply("Sorry, something went wrong while fetching the cat image :(");
+    await citel.reply("Sorry, something went wrong while fetching the Pokémon image :(");
   }
 });
-
-
 
