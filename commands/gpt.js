@@ -49,7 +49,7 @@ async (Void, citel) => {
   try {
     const response = await axios.get("https://api.thecatapi.com/v1/images/search");
     const imageUrl = response.data[0].url;
-    await citel.sendMessage(citel.jid, { url: imageUrl }, MessageType.image);
+    await Void.sendMessage(citel.chat, {image: { url: imageUrl }});
   } catch (error) {
     console.error(error);
     await citel.reply("Sorry, something went wrong while fetching the cat image :(");
