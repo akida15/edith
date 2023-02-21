@@ -68,7 +68,7 @@ cmd({
   pattern: "animal",
   fromMe: true,
 },
-async (message, match) => {
+async (Void, citel) => {
   try {
     const response = await axios.get("https://api.unsplash.com/photos/random", {
       params: {
