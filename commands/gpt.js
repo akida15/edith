@@ -64,3 +64,72 @@ async (Void, citel) => {
   }
 });
 
+cmd({
+  pattern: "cat1",
+  fromMe: true,
+},
+async (message, match) => {
+  try {
+    const response = await axios.get("https://api.thecatapi.com/v1/images/search");
+    const catImageUrl = response.data[0].url;
+    await message.client.sendMessage(message.jid, {
+      image: { url: catImageUrl }
+    }, MessageType.image);
+  } catch (error) {
+    console.error(error);
+    await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the cat image :(", MessageType.text);
+  }
+});
+
+
+
+cmd({
+  pattern: "نكتة",
+  fromMe: true,
+},
+async (message, match) => {
+  try {
+    const response = await axios.get("https://icanhazdadjoke.com/", {
+      headers: {
+        Accept: "application/json",
+        "User-Agent": "MyBot/1.0",
+      },
+      params: {
+        lang: "ar",
+      },
+    });
+    const joke = response.data.joke;
+    await message.client.sendMessage(message.jid, joke, MessageType.text);
+  } catch (error) {
+    console.error(error);
+    await message.client.sendMessage(message.jid, "عذراً، حدث خطأ أثناء جلب النكتة :(", MessageType.text);
+  }
+});
+
+
+
+const axios = require('axios');
+
+cmd({
+  pattern: "animequote",
+  fromMe: true,
+},
+async (message, match) => {
+  try {
+    const response = await axios.get("https://animechan.vercel.app/api/random", {
+      headers: {
+        "Accept-Language": "ar",
+      },
+    });
+    const anime = response.data.anime;
+    const character = response.data.character;
+    const quote = response.data.quote;
+    const formattedQuote = `"${quote}" - ${character} (${anime})`;
+    await message.client.sendMessage(message.jid, formattedQuote, MessageType.text);
+  } catch (error) {
+    console.error(error);
+    await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the anime quote :(", MessageType.text);
+  }
+});
+
+
