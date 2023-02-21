@@ -64,8 +64,6 @@ async (Void, citel) => {
   }
 });
 
-const axios = require('axios');
-
 cmd({
   pattern: "animal",
   fromMe: true,
