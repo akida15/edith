@@ -107,9 +107,6 @@ async (message, match) => {
 });
 
 
-
-const axios = require('axios');
-
 cmd({
   pattern: "animequote",
   fromMe: true,
