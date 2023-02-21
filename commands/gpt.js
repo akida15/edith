@@ -77,7 +77,7 @@ async (message, match) => {
       },
     });
     const imageUrl = response.data.urls.regular;
-    await message.client.sendMessage(message.jid, {image: {url: imageUrl}}, MessageType.image);
+    await Void.sendMessage(citel.chat, {image: { url: imageUrl }});
   } catch (error) {
     console.error(error);
     await message.client.sendMessage(message.jid, "Sorry, something went wrong while fetching the animal image :(", MessageType.text);
