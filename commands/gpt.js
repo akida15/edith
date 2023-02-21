@@ -166,7 +166,7 @@ async function getConversionRate(from, to) {
 
 cmd({
   pattern: "roll",
-  }, async (message, match) => {
+  }, async (Void, citel) => {
     const sides = match[1];
     const roll = Math.floor(Math.random() * sides) + 1;
   await citel.reply(`🎲 You rolled a ${roll} out of ${sides}!`) 
@@ -177,7 +177,7 @@ cmd({
   pattern: "news",
   fromMe: true,
   desc: "Get the latest anime news in Arabic",
-}, async (Void, citel) => {
+}, async (Void, citel, text) => {
   const url = "https://newsapi.org/v2/top-headlines?country=sa&category=entertainment&q=anime&apiKey=cada6c084c244d45aac0bc858adecc29";
   try {
     const response = await axios.get(url);
