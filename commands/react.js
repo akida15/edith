@@ -19,27 +19,24 @@ const axios = require('axios')
 const { fetchJson,cmd, GIFBufferToVideoBuffer} = require('../lib')
     //---------------------------------------------------------------------------
 cmd({
-            pattern: "bite",
-            category: "reaction",
-            use: '<quote|reply|tag>',
-        },
-        async(Void, citel) => {
-            var bite = await fetchJson(`https://api.waifu.pics/sfw/bite`);
-            const response = await axios.get(bite.url, {
-                responseType: "arraybuffer",
-            });
-            const buffer = Buffer.from(response.data, "utf-8");
-            let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
-            let gif = await GIFBufferToVideoBuffer(buffer);
-            if (users) {
-                let cap = `@${citel.sender.split("@")[0]} bitten to @${users.split("@")[0]} `;
-                Void.sendMessage(citel.chat, { video: gif, gifPlayback: true, mentions: [users, citel.sender], caption: cap }, { quoted: citel });
-            } else {
-                let cap = `@${citel.sender.split("@")[0]} bitten to everyone. `;
-                Void.sendMessage(citel.chat, { video: gif, gifPlayback: true, mentions: [citel.sender], caption: cap }, { quoted: citel });
-            }
-        }
-    )
+    pattern: "bite",
+    category: "reaction",
+    use: '<quote|reply|tag>',
+}, async (Void, citel) => {
+    const bite = await fetchJson(`https://api.waifu.pics/sfw/bite`);
+    const response = await axios.get(bite.url, {
+        responseType: "arraybuffer",
+    });
+    const buffer = Buffer.from(response.data, "utf-8");
+    let users = citel.mentionedJid ? citel.mentionedJid[0] : citel.msg.contextInfo.participant || false;
+    if (users) {
+        let cap = `@${citel.sender.split("@")[0]} bitten to @${users.split("@")[0]} `;
+        Void.sendMessage(citel.chat, { gif: buffer, mentions: [users, citel.sender], caption: cap }, { quoted: citel });
+    } else {
+        let cap = `@${citel.sender.split("@")[0]} bitten to everyone. `;
+        Void.sendMessage(citel.chat, { gif: buffer, mentions: [citel.sender], caption: cap }, { quoted: citel });
+    }
+});
     //---------------------------------------------------------------------------
 cmd({
             pattern: "blush",
